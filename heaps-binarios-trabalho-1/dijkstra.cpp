@@ -49,11 +49,11 @@ void Heap::insert(pair<int,int> element) {
 }
 
 pair<int,int> Heap::deletemin() {
-  pair<int,int> min = heap.front();
+  pair<int,int> v = heap.front();
   swap(heap[0],heap[heap.size()-1]);
   heap.pop_back();
   heapifydown(0);
-  return min;
+  return v;
 }
 
 void Heap::update(int w, int index) {
@@ -159,33 +159,32 @@ int main (int argc, char *argv[]) {
   /*** Dijkstra ***/
   dynamic_bitset<> visited(total_nodes+1); //zero by default
   int distance[total_nodes];
-  for (int i = 0; i < total_nodes; i++) {
+  for (int i = 0; i <= total_nodes; i++) {
     distance[i] = -1;
   }
   distance[from-1] = 0;
   Heap* pQueue = new Heap();
   pQueue->insert(make_pair(from,0));
-  bool found = false;
   while (pQueue->size() > 0) {
-    pair<int, int> min = pQueue->deletemin();
-    visited.set(min.first);
-    set<int> neighbors = sparseMatrix[min.first];
+    pair<int, int> v = pQueue->deletemin();
+    visited.set(v.first);
+    set<int> neighbors = sparseMatrix[v.first];
     for (set<int>::iterator i = neighbors.begin(); i != neighbors.end(); i++) {
       if (!visited.test(*i)) {
         if (distance[*i-1] == -1) {
           stringstream ss;
-          ss << min.first << "to" << *i;
+          ss << v.first << "to" << *i;
           string key = ss.str();
-          distance[*i-1] = min.second + weights[key];
+          distance[*i-1] = v.second + weights[key];
           pQueue->insert(make_pair(*i,distance[*i-1]));
         } else {
           stringstream ss;
-          ss << min.first << "to" << *i;
+          ss << v.first << "to" << *i;
           string key = ss.str();
-          if ( (min.second + weights[key]) < distance[*i-1]) { 
-            distance[*i-1] = min.second + weights[key];
-            pQueue->update(*i,distance[*i-1]);
+          if ( (v.second + weights[key]) < distance[*i-1]) { 
+            distance[*i-1] = v.second + weights[key];
           }
+          pQueue->update(*i,distance[*i-1]);
         }
       }   
     }
