@@ -184,12 +184,12 @@ int main (int argc, char *argv[]) {
           string key = ss.str();
           if ( (min.second + weights[key]) < distance[*i-1]) { 
             distance[*i-1] = min.second + weights[key];
-            pQueue->update(*i-1,distance[*i-1]);
+            pQueue->update(*i,distance[*i-1]);
           }
         }
       }   
     }
   } 
-  cout << distance[to-1] << endl;
-  //cout << answer << " == " << distance[to-1] << endl;
+  //cout << distance[to-1] << endl;
+  cout << answer << " == " << distance[to-1] << endl;
 }
