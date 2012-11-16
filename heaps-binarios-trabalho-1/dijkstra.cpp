@@ -6,19 +6,38 @@
 #include <stdlib.h>
 #include <string>
 #include <vector>
+#include <stack>
 #include <iterator>
 #include <sstream>
 #include <bitset>
 #include <limits>
 #include <boost/dynamic_bitset.hpp>
 #include <math.h>
+#include <boost/graph/adjacency_list.hpp>
+#include <boost/graph/adjacency_iterator.hpp>
+//#include <boost/graph/connected_components.hpp>
 
 using namespace std;
 using namespace boost;
+//map<int, set<int> > sparseMatrix;
+//map<string, int> weights; 
 
-map<int, set<int> > sparseMatrix;
-map<string, int> weights; 
-
+// information stored in vertices
+struct VertexInformation {
+  unsigned component;
+};
+    
+// information stored in edges
+struct EdgeInformation {
+  unsigned weight;
+};
+      
+const unsigned maxweight = 9999999;
+        
+// graph is an adjacency list represented by vectors
+typedef adjacency_list<vecS, vecS, directedS,VertexInformation,EdgeInformation> Graph;
+typedef graph_traits<Graph>::vertex_descriptor Node;
+typedef graph_traits <Graph>::edge_descriptor Edge;
 
 class Heap {
   public:
@@ -56,12 +75,20 @@ pair<int,int> Heap::deletemin() {
   return min;
 }
 
-void Heap::update(int w, int index) {
+void Heap::update(int _node, int w) {
+  int node, index;
+  for (int i = 0; i < heap.size(); i++) {
+    if (heap[i].first == _node) {
+      node = heap[i].first;
+      index = i;
+      break;
+    }
+  }
   if (w < heap[index].second) {
-    heap[index] = make_pair(heap[index].first,w);
+    heap[index] = make_pair(node,w);
     heapifyup(index);
   } else {
-    heap[index] = make_pair(heap[index].first,w);
+    heap[index] = make_pair(node,w);
     heapifydown(index);
   }
 }
@@ -105,19 +132,18 @@ void Heap::heapifydown(int index) {
 
 
 int Heap::left(int parent) {
-  int i = (2*parent)+1;
+  int i = 2 * parent + 1;
   return ( i < heap.size() ) ? i : -1;
 }
 
 int Heap::right(int parent) {
-  int i = (2*parent) + 2;
+  int i = 2 * parent + 2;
   return ( i < heap.size() ) ? i : -1;
 }
 
 int Heap::parent(int child) {
   if (child != 0) {
-    int i = int(floor((child - 1) / 2.0));
-    return i;
+    return (child - 1) / 2;
   }
   return -1;
 }
@@ -126,11 +152,10 @@ int main (int argc, char *argv[]) {
   assert(argc == 3);
   int from = atoi(argv[1]);
   int to = atoi(argv[2]);
-  int total_nodes;
-  int total_arcs;
-  int answer;
-  cout << "Importing graph...";
+  
+  cout << "Importing graph..." << endl;
   string line;
+  Graph g;
   while (cin) {
     getline(cin, line);
     vector<string> tokens;
@@ -139,57 +164,74 @@ int main (int argc, char *argv[]) {
       istream_iterator<string>(),
       back_inserter<vector<string> >(tokens));
     if (tokens.size() && tokens[0] == "a") {
-      sparseMatrix[atoi(tokens[1].c_str())]
-        .insert(atoi(tokens[2].c_str()));
-      stringstream ss;
-      ss << tokens[1] << "to" << tokens[2];
-      string key = ss.str();
-      weights[key] = atoi(tokens[3].c_str()); 
-    } else if (tokens.size() && tokens[0] == "p") {
-      total_nodes = atoi(tokens[2].c_str());
-      total_arcs = atoi(tokens[3].c_str());
-    } else if (tokens.size() && (tokens[0] == "c") && (tokens[1] == "answer")) {
-      cout << tokens[1] << " from " << tokens[3] << " to " << tokens[4] << ": " << tokens[2] << endl;;
-      answer = atoi(tokens[2].c_str());
-      from = atoi(tokens[3].c_str());
-      to = atoi(tokens[4].c_str());
-    }    
+      Edge e = add_edge( atoi(tokens[1].c_str()), atoi(tokens[2].c_str()), g).first;
+      g[e].weight = atoi(tokens[3].c_str());
+    } 
   };
-  cout << " - Finished" <<  endl;
+  cout << "Finished importing" <<  endl;
+  
   /*** Dijkstra ***/
-  dynamic_bitset<> visited(total_nodes+1); //zero by default
-  int distance[total_nodes];
-  for (int i = 0; i < total_nodes; i++) {
-    distance[i] = -1;
+  cout << "Calculating distance from " << from << " to " << to << endl;
+  int previous[num_vertices(g)+1];
+  for (int i = 0; i <= num_vertices(g); i++) previous[i] = 0;
+  bool visited[num_vertices(g)+1];
+  for (int i = 0; i <= num_vertices(g); i++) visited[i] = false;
+  clock_t start, finish;
+  start = clock();
+  int distance[num_vertices(g)+1];
+  for (int i = 0; i < num_vertices(g); i++) {
+    distance[i] = maxweight*2;
   }
-  distance[from-1] = 0;
+  distance[from] = 0;
   Heap* pQueue = new Heap();
   pQueue->insert(make_pair(from,0));
-  bool found = false;
+  pair<int,int> min = make_pair(from,0);
   while (pQueue->size() > 0) {
-    pair<int, int> min = pQueue->deletemin();
-    visited.set(min.first);
-    set<int> neighbors = sparseMatrix[min.first];
-    for (set<int>::iterator i = neighbors.begin(); i != neighbors.end(); i++) {
-      if (!visited.test(*i)) {
-        if (distance[*i-1] == -1) {
-          stringstream ss;
-          ss << min.first << "to" << *i;
-          string key = ss.str();
-          distance[*i-1] = min.second + weights[key];
-          pQueue->insert(make_pair(*i,distance[*i-1]));
+    int prev = min.first;
+    min = pQueue->deletemin();
+    if (min.first == to) break;
+    visited[min.first] = true;
+    typedef boost::property_map<Graph, boost::vertex_index_t>::type IndexMap;
+    IndexMap index = get(boost::vertex_index, g);
+    typedef boost::graph_traits < Graph >::adjacency_iterator adjacency_iterator;
+    std::pair<adjacency_iterator, adjacency_iterator> ngs = boost::adjacent_vertices(vertex(min.first,g), g);
+    for(; ngs.first != ngs.second; ++ngs.first) {
+      int u = index[*ngs.first];
+      if (!visited[u]) {
+        if (distance[u] > maxweight) {
+          Edge e = edge(min.first,u,g).first;
+          distance[u] = (min.second + g[e].weight);
+          pQueue->insert(make_pair(u,distance[u]));
+          previous[u] = min.first;
         } else {
-          stringstream ss;
-          ss << min.first << "to" << *i;
-          string key = ss.str();
-          if ( (min.second + weights[key]) < distance[*i-1]) { 
-            distance[*i-1] = min.second + weights[key];
-            pQueue->update(*i-1,distance[*i-1]);
+          Edge e = edge(min.first,u,g).first;
+          if ( (min.second + g[e].weight) < distance[u]) {
+            distance[u] = (min.second + g[e].weight);
+            pQueue->update(u,distance[u]);
+            previous[u] = min.first;
           }
         }
-      }   
+      }
     }
-  } 
-  cout << distance[to-1] << endl;
-  //cout << answer << " == " << distance[to-1] << endl;
+  }
+  finish = clock();
+  cout << "Elapsed Time: "
+       << ((double)(finish - start))/CLOCKS_PER_SEC << endl;
+  cout << "Distance: " << distance[to] << endl; 
+  
+  int prev = to;
+  stack<int> path;
+  int dist_sum = 0;
+  while (prev != from) {
+    dist_sum += g[edge(previous[prev],prev,g).first].weight;
+    path.push(prev);
+    prev = previous[prev];
+  }
+  path.push(from);
+  cout << "Path: ";
+  while (!path.empty()) {
+    cout << path.top() << " ";
+    path.pop();
+  }
+  cout << endl << " -> Total distance: " << dist_sum << endl;
 }

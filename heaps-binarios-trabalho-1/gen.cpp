@@ -1,3 +1,5 @@
+
+
 /**
  * \file gen.cpp
  *   \author Marcus Ritt <mrpritt@inf.ufrgs.br> 
@@ -59,8 +61,6 @@ int main(int argc, char *argv[]) {
   vector<unsigned> dist(n);
   vector<unsigned> pred(n);
   dijkstra_shortest_paths(g,src,weight_map(get(&EdgeInformation::weight,g)).distance_map(&dist[0]).predecessor_map(&pred[0]));
-  cout << "c Distance between " << src+1 << " and " << dst+1 << " is " << dist[dst] << endl;
-  cout << "c answer " << dist[dst] << " " << src+1 << " " << dst+1 << endl;
   cerr << "Distance between " << src+1 << " and " << dst+1 << " is " << dist[dst] << endl;
  
   // (3) print out in DIMACS challenge format
@@ -69,3 +69,5 @@ int main(int argc, char *argv[]) {
   for ( tie(eb, ee)=edges(g); eb != ee; eb++)
     cout << "a " << source(*eb,g)+1 << " " << target(*eb, g)+1 << " " << g[*eb].weight << endl;
 }
+
+
