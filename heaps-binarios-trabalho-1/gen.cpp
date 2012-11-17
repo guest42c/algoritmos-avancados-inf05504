@@ -50,7 +50,7 @@ int main(int argc, char *argv[]) {
     for(unsigned j=0; j<n; j++)
       if (i != j && drand48() < p) {
         Edge e = add_edge(i,j,g).first;
-	g[e].weight = lrand48()%maxweight;
+	      g[e].weight = lrand48()%maxweight;
       }
  
  

@@ -218,7 +218,7 @@ int main (int argc, char *argv[]) {
   cout << "Elapsed Time: "
        << ((double)(finish - start))/CLOCKS_PER_SEC << endl;
   cout << "Distance: " << distance[to] << endl; 
-  
+  cerr << num_vertices(g) << " " << ((double)(finish - start))/CLOCKS_PER_SEC << endl; 
   int prev = to;
   stack<int> path;
   int dist_sum = 0;
