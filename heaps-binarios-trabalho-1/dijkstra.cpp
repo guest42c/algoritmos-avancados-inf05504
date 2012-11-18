@@ -192,7 +192,7 @@ int main (int argc, char *argv[]) {
     int prev = min.first;
     min = pQueue->deletemin();
     count_deletemin++;
-    //if (min.first == to) break;
+    if (min.first == to) break;
     visited[min.first] = true;
     typedef boost::property_map<Graph, boost::vertex_index_t>::type IndexMap;
     IndexMap index = get(boost::vertex_index, g);
@@ -224,8 +224,8 @@ int main (int argc, char *argv[]) {
   cout << "Elapsed Time(ms): "
        << elapsed_time << endl;
   cout << "Distance: " << distance[to] << endl; 
-  cerr << num_vertices(g) << " " << elapsed_time << " " 
-        << num_edges(g) << " " << count_deletemin << " " << count_insert << " " << count_update << endl; 
+  cerr << num_vertices(g) << "\t" << elapsed_time << "\t" 
+        << num_edges(g) << "\t" << count_deletemin << "\t" << count_insert << "\t" << count_update << endl; 
   int prev = to;
   stack<int> path;
   int dist_sum = 0;
