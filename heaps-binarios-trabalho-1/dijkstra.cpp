@@ -169,7 +169,9 @@ int main (int argc, char *argv[]) {
     } 
   };
   cout << "Finished importing" <<  endl;
-  
+  int count_deletemin = 0;
+  int count_insert = 0;
+  int count_update = 0;
   /*** Dijkstra ***/
   cout << "Calculating distance from " << from << " to " << to << endl;
   int previous[num_vertices(g)+1];
@@ -189,7 +191,8 @@ int main (int argc, char *argv[]) {
   while (pQueue->size() > 0) {
     int prev = min.first;
     min = pQueue->deletemin();
-    if (min.first == to) break;
+    count_deletemin++;
+    //if (min.first == to) break;
     visited[min.first] = true;
     typedef boost::property_map<Graph, boost::vertex_index_t>::type IndexMap;
     IndexMap index = get(boost::vertex_index, g);
@@ -202,12 +205,14 @@ int main (int argc, char *argv[]) {
           Edge e = edge(min.first,u,g).first;
           distance[u] = (min.second + g[e].weight);
           pQueue->insert(make_pair(u,distance[u]));
+          count_insert++;
           previous[u] = min.first;
         } else {
           Edge e = edge(min.first,u,g).first;
           if ( (min.second + g[e].weight) < distance[u]) {
             distance[u] = (min.second + g[e].weight);
             pQueue->update(u,distance[u]);
+            count_update++;
             previous[u] = min.first;
           }
         }
@@ -215,10 +220,12 @@ int main (int argc, char *argv[]) {
     }
   }
   finish = clock();
-  cout << "Elapsed Time: "
-       << ((double)(finish - start))/CLOCKS_PER_SEC << endl;
+  long elapsed_time = ((double)(finish - start))*1000/CLOCKS_PER_SEC;
+  cout << "Elapsed Time(ms): "
+       << elapsed_time << endl;
   cout << "Distance: " << distance[to] << endl; 
-  cerr << num_vertices(g) << " " << ((double)(finish - start))/CLOCKS_PER_SEC << endl; 
+  cerr << num_vertices(g) << " " << elapsed_time << " " 
+        << num_edges(g) << " " << count_deletemin << " " << count_insert << " " << count_update << endl; 
   int prev = to;
   stack<int> path;
   int dist_sum = 0;
