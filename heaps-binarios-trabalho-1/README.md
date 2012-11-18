@@ -44,13 +44,14 @@ Como executar e testar
 Os programas fazem uso da biblioteca Boost de C++. Para compilar você precisa ter essa biblioteca instalada.
 
 ### Compilando ###
-  * Compile o gerador de teste:
-    c++ -o gen gen.cpp
-  * Compile o programa dijkstra
-    c++ dijkstra dijkstra.cpp
+* Compile o gerador de teste:
+  c++ -o gen gen.cpp
+* Compile o programa dijkstra
+  c++ dijkstra dijkstra.cpp
 
 ### Script de testes ###
-O script de testes 
+O script de testes gera grafos de testes (aleatorio) e executa dijkstra para o grafo resultante. Ele repete isso 10 vezes para cada uma das quantidades de vertices (100,200,300,...,3000) dado uma determinada probabilidade (input).
+  ./run\_tests.sh
 
 ### Gerando casos de teste (grafos) ###
 Para gerar casos de teste use gen.cpp, ex:
