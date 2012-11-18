@@ -1,15 +1,15 @@
 Trabalho 1 (Heaps binários)
 ==========================
 
-[Objetivos](#objetivos)
-[Casos de Testes](#casos_testes)
-[Observações](#observacoes)
-[Convenções](#convencoes)
-[Como Testar](#como_testar)
-[Avaliação e Resultados](#avaliacao)
+1. [Objetivos](#objetivos)
+2. [Casos de Testes](#casos_testes)
+3. [Observações](#observacoes)
+4. [Convenções](#convencoes)
+5. [Como Testar](#como_testar)
+6. [Avaliação e Resultados](#avaliacao)
 
 <a id="objetivos"/>
-Objetivos
+1 Objetivos
 --------
 
   * Implementar um heap binário e verificar a complexidade das operações experimentalmente.
@@ -17,20 +17,20 @@ Objetivos
   * Comparar a complexidade teórica pessimista com a complexidade real. Em particular verificar que a complexidade real respeita o limite teórico.
 
 <a id="casos_testes"/>
-Casos de teste
+2 Casos de teste
 --------------
 
   * O caso de teste é o rede de trânsito de New York, que pode ser baixado na página do DIMACS challenge.
   * Para testar: Gerar um número suficiente (>100) de pares aleatórias de vértices origem e destino e medir o tempo de execução e o número de operações “insert”, “deletemin” e “decreasekey”.
 
 <a id="observacoes"/>
-Observações
+3 Observações
 -----------
 
   * Como o grafo possui 264346 vértices é necessário usar uma representação esparsa. Uma matriz de adjacência, em particular, não serve.
 
 <a id="convencoes"/>
-Convenções
+4 Convenções
 ----------
 
   * As implementações do algoritmo de Dijkstra devem aceitar um grafo no formato da DIMACS challenge na entrada padrão (stdin), os índices de dois vértices origem e destino na linha de comando e imprimir o valor do caminho mais curto na saída padrão (stdout). Caso não existo caminho entre os dois vértices imprimir “inf”. Exemplo (em UNIX)
@@ -39,18 +39,19 @@ Convenções
   803
 
 <a id="como_testar"/>
-Como executar e testar
+5 Como executar e testar
 ---------------------
 Os programas fazem uso da biblioteca Boost de C++. Para compilar você precisa ter essa biblioteca instalada.
 
 ### Compilando ###
-  * Compile o gerador de teste:
-    c++ -o gen gen.cpp
-  * Compile o programa dijkstra
-    c++ dijkstra dijkstra.cpp
+* Compile o gerador de teste:
+  c++ -o gen gen.cpp
+* Compile o programa dijkstra
+  c++ dijkstra dijkstra.cpp
 
 ### Script de testes ###
-O script de testes 
+O script de testes gera grafos de testes (aleatorio) e executa dijkstra para o grafo resultante. Ele repete isso 10 vezes para cada uma das quantidades de vertices (100,200,300,...,3000) dado uma determinada probabilidade (input).
+  ./run\_tests.sh
 
 ### Gerando casos de teste (grafos) ###
 Para gerar casos de teste use gen.cpp, ex:
@@ -62,7 +63,7 @@ Para rodar dijkstra, passe como argumentos o vertice inicial, vertice final e o 
   ./dijkstra 1 2 < test.gr
 
 <a id="avaliacao"/>
-Avaliação e Resultados
+6 Avaliação e Resultados
 ----------------------
 Comming soon...
 Under construction xD
