@@ -1,14 +1,13 @@
 Trabalho 1 (Heaps binários)
 ==========================
 
-1. [Objetivos](#objetivos)
-2. [Casos de Testes](#casos_testes)
-3. [Observações](#observacoes)
-4. [Convenções](#convencoes)
-5. [Como Testar](#como_testar)
-6. [Avaliação e Resultados](#avaliacao)
+1. [Objetivos](#1-objetivos)
+2. [Casos de Testes](#2-casos-de-teste)
+3. [Observações](#3-observações)
+4. [Convenções](#4-convenções)
+5. [Como Testar](#5-como-executar-e-testar)
+6. [Avaliação e Resultados](#6-avaliação-e-resultados)
 
-<a id="objetivos"/>
 1 Objetivos
 --------
 
@@ -16,20 +15,17 @@ Trabalho 1 (Heaps binários)
   * Implementar o algoritmo de Dijkstra usando o heap implementado.
   * Comparar a complexidade teórica pessimista com a complexidade real. Em particular verificar que a complexidade real respeita o limite teórico.
 
-<a id="casos_testes"/>
 2 Casos de teste
 --------------
 
   * O caso de teste é o rede de trânsito de New York, que pode ser baixado na página do DIMACS challenge.
   * Para testar: Gerar um número suficiente (>100) de pares aleatórias de vértices origem e destino e medir o tempo de execução e o número de operações “insert”, “deletemin” e “decreasekey”.
 
-<a id="observacoes"/>
 3 Observações
 -----------
 
   * Como o grafo possui 264346 vértices é necessário usar uma representação esparsa. Uma matriz de adjacência, em particular, não serve.
 
-<a id="convencoes"/>
 4 Convenções
 ----------
 
@@ -38,7 +34,6 @@ Trabalho 1 (Heaps binários)
   > ./dijkstra 1 2 < NY.gr
   803
 
-<a id="como_testar"/>
 5 Como executar e testar
 ---------------------
 Os programas fazem uso da biblioteca Boost de C++. Para compilar você precisa ter essa biblioteca instalada.
@@ -62,7 +57,6 @@ Esse comando gera um grafo no formato DIMACS challenge.
 Para rodar dijkstra, passe como argumentos o vertice inicial, vertice final e o arquivo do grafo na entrada padrão, ex:
   ./dijkstra 1 2 < test.gr
 
-<a id="avaliacao"/>
 6 Avaliação e Resultados
 ----------------------
 Comming soon...
