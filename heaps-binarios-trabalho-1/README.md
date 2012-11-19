@@ -8,25 +8,25 @@ Trabalho 1 (Heaps binários)
 5. [Avaliação e Resultados](#5-experimentos-e-resultados)
 
 1 Objetivos
---------
+-----------
 * Implementar um heap binário e verificar a complexidade das operações experimentalmente.
 * Implementar o algoritmo de Dijkstra usando o heap implementado.
 * Comparar a complexidade teórica pessimista com a complexidade real. Em particular verificar que a complexidade real respeita o limite teórico.
 
 2 Solução
---------------
+---------
 Implementei o algoritmo de Dijkstra utilizando um heap binário de acordo com o material e pseudo algoritmos retirados do material do prof. [Marcus Ritt](http://www.inf.ufrgs.br/~mrpritt/doku.php?id=homepage "Marcus Riit").
 
-
+TODO: Adicionar pseudo algoritmos aqui
 
 3 Ambiente de testes
------------
-Os resultados foram obtidos num desktop, com processador Intel Core 2 Duo E8400 de $3$ GHz, e $4$ GB de RAM. 
-Os dados foram gerados randomicamente, utilizando o gerador de casos de testes fornecido (gen.cpp) com numero de vértices variando de 100,200,300,...,2000 e a chance de existir arestas entre cada vertice 0.1, 0.5, 0.7 e 0.9. Cada combinação de teste foi repetida 10 vezes.
-
+--------------------
+Os resultados foram obtidos num desktop, com processador Intel Core 2 Duo E8400 de 3 GHz, e 4 GB de RAM. 
+Rodando Fedora 16, Kernel Linux 3.6.6-1.fc16.x86\_64.
 
 4 Como executar e testar
----------------------
+------------------------
+
 Os programas fazem uso da biblioteca Boost de C++. Para compilar você precisa ter essa biblioteca instalada.
 
 A implementação do algoritmo de Dijkstra aceita um grafo no formato da DIMACS challenge na entrada padrão (stdin) e os índices de dois vértices origem e destino na linha de comando. Ele imprime o valor do caminho mais curto na saída padrão (stdout). Caso não existo caminho entre os dois vértices imprimir “inf”. Exemplo (em UNIX):
@@ -61,5 +61,16 @@ Para rodar dijkstra, passe como argumentos o vertice inicial, vertice final e o 
 
 5 Experimentos e Resultados
 ---------------------------
-Comming soon...
-Under construction xD
+Os dados foram gerados, randomicamente, utilizando o gerador de casos de testes fornecido (gen.cpp) com numero de vértices variando de 100, 200, 300,..., 2000 e a chance de existir arestas entre cada vertice 0.1, 0.5, 0.7 e 0.9.
+Cada combinação de teste foi repetida 10 vezes, gerado a média, maxima e minima dos seguintes dados:
+* Tempo de execução
+* Chamadas a deletemin()
+* Chamadas a insert()
+* Chamadas a update()
+
+### Chamadas a deletemin, insert e update ###
+
+### Tempo de execução ###
+
+![Under Construction](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSND5PcVVp5hZtD6up1CMsK4CwOyxoycX9CfGJlgL-OSYrRiETt)
+xD

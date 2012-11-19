@@ -1,8 +1,8 @@
 echo "Chance of existing edge:"
 read chance 
+echo "vertices elapsed_time edges deletemin insert update" > "experiment-$chance-all"
 for ((i = 100; i <= 2000; i = i + 100 ))
 do
-  echo "vertices elapsed_time edges deletemin insert update" > "experiment-$chance-all"
   for ((j = 0; j < 10; j++))
   do
     echo "Execution $j to $i vertices"
