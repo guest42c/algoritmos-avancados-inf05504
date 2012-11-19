@@ -5,7 +5,7 @@ Trabalho 1 (Heaps binários)
 2. [Solução](#2-solução)
 3. [Ambiente de testes](#3-ambiente-de-testes)
 4. [Como executar e testar](#4-como-executar-e-testar)
-5. [Avaliação e Resultados](#5-experimentos-e-resultados)
+5. [Experimentos e Resultados](#5-experimentos-e-resultados)
 
 1 Objetivos
 -----------
@@ -35,14 +35,16 @@ A implementação do algoritmo de Dijkstra aceita um grafo no formato da DIMACS 
   > 803
 
 ### Compilando ###
-* Compile o gerador de teste:
+Compile o gerador de teste:
   > c++ -o gen gen.cpp
-* Compile o programa dijkstra
+Compile o programa dijkstra
   > c++ dijkstra dijkstra.cpp
 
 ### Script de testes ###
 O script de testes gera grafos de testes (aleatorio) e executa dijkstra para o grafo resultante. Ele repete isso 10 vezes para cada uma das quantidades de vertices (100,200,300,...,2000) dado uma determinada probabilidade (input).
+
   > ./run\_tests.sh
+
 O script de teste irá gerar os seguintes arquivos, para uma probabilidade de 0.5:
 * experiment-0.5-time, contem o maior tempo de execução, a média e o menor tempo de execução para o determinado número de vertices.
 * experiment-0.5-deletemin, contem o maior número de chamadas, a média e o menor número de chamadas a insert para o determinado número de vertices.
@@ -69,8 +71,22 @@ Cada combinação de teste foi repetida 10 vezes, gerado a média, maxima e mini
 * Chamadas a update()
 
 ### Chamadas a deletemin, insert e update ###
+O algoritmo de Dijkstra possui complexidade:
+  > O(n) + n x deletemin + n x insert + m x update. 
+
+Por isso a utilização de uma boa estrutura de dados para a fila de prioridades utilizada no algoritmo de dijkstra é crucial para se obter complexidade melhor que quadrática. Utilizando um heap binário tem-se complexidade O(n log n + m log n). Isso porque é possivel realizar as operações de insert, deletemin e update em O(log n).
+
+Veja abaixo os resultados das experimentações práticas.
+
+#### deletemin ####
+
+#### insert ####
+
+#### update ####
 
 ### Tempo de execução ###
+Abaixo os resultados dos tempos de execução medidos:
+
 
 ![Under Construction](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSND5PcVVp5hZtD6up1CMsK4CwOyxoycX9CfGJlgL-OSYrRiETt)
-xD
+
