@@ -222,7 +222,7 @@ int main (int argc, char *argv[]) {
   }
   finish = clock();
   long elapsed_time = ((double)(finish - start))*1000/CLOCKS_PER_SEC;
-  if (distance[to] == 0)
+  if (distance[to] == maxweight*2)
     cout << "inf" << endl;
   else
     cout << distance[to] << endl;

@@ -10,7 +10,7 @@ do
     echo "Graph created with $i vertices and $chance chance of existing edges between vertices." 
     from=$(awk '{print $3}' "test-$chance-$i.an.gr")
     to=$(awk '{print $5}' "test-$chance-$i.an.gr")
-    echo "Calculation distance between $from and $to."
+    echo "Calculating distance between $from and $to."
     ./dijkstra $from $to < "test-$chance-$i.gr" 2>> "run.tmp"
     rm "test-$chance-$i.gr"
     rm "test-$chance-$i.an.gr" 
