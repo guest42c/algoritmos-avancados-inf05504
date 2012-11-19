@@ -75,20 +75,20 @@ pair<int,int> Heap::deletemin() {
   return min;
 }
 
-void Heap::update(int _node, int w) {
-  int node, index;
+void Heap::update(int _vertex, int w) {
+  int vertex, index;
   for (int i = 0; i < heap.size(); i++) {
-    if (heap[i].first == _node) {
-      node = heap[i].first;
+    if (heap[i].first == _vertex) {
+      vertex = heap[i].first;
       index = i;
       break;
     }
   }
   if (w < heap[index].second) {
-    heap[index] = make_pair(node,w);
+    heap[index] = make_pair(vertex,w);
     heapifyup(index);
   } else {
-    heap[index] = make_pair(node,w);
+    heap[index] = make_pair(vertex,w);
     heapifydown(index);
   }
 }
@@ -153,7 +153,7 @@ int main (int argc, char *argv[]) {
   int from = atoi(argv[1]);
   int to = atoi(argv[2]);
   
-  cout << "Importing graph..." << endl;
+  //cout << "Importing graph..." << endl;
   string line;
   Graph g;
   while (cin) {
@@ -168,12 +168,12 @@ int main (int argc, char *argv[]) {
       g[e].weight = atoi(tokens[3].c_str());
     } 
   };
-  cout << "Finished importing" <<  endl;
+  //cout << "Finished importing" <<  endl;
   int count_deletemin = 0;
   int count_insert = 0;
   int count_update = 0;
   /*** Dijkstra ***/
-  cout << "Calculating distance from " << from << " to " << to << endl;
+  //cout << "Calculating distance from " << from << " to " << to << endl;
   int previous[num_vertices(g)+1];
   for (int i = 0; i <= num_vertices(g); i++) previous[i] = 0;
   bool visited[num_vertices(g)+1];
@@ -187,6 +187,7 @@ int main (int argc, char *argv[]) {
   distance[from] = 0;
   Heap* pQueue = new Heap();
   pQueue->insert(make_pair(from,0));
+  count_insert++;
   pair<int,int> min = make_pair(from,0);
   while (pQueue->size() > 0) {
     int prev = min.first;
@@ -221,11 +222,14 @@ int main (int argc, char *argv[]) {
   }
   finish = clock();
   long elapsed_time = ((double)(finish - start))*1000/CLOCKS_PER_SEC;
-  cout << "Elapsed Time(ms): "
-       << elapsed_time << endl;
-  cout << "Distance: " << distance[to] << endl; 
+  if (distance[to] == 0)
+    cout << "inf" << endl;
+  else
+    cout << distance[to] << endl;
   cerr << num_vertices(g) << "\t" << elapsed_time << "\t" 
         << num_edges(g) << "\t" << count_deletemin << "\t" << count_insert << "\t" << count_update << endl; 
+  
+  /* Return the path
   int prev = to;
   stack<int> path;
   int dist_sum = 0;
@@ -241,4 +245,5 @@ int main (int argc, char *argv[]) {
     path.pop();
   }
   cout << endl << " -> Total distance: " << dist_sum << endl;
+  */
 }
