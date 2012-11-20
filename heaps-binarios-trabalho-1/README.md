@@ -61,6 +61,22 @@ Esse comando gera um grafo no formato DIMACS challenge.
 Para rodar dijkstra, passe como argumentos o vertice inicial, vertice final e o arquivo do grafo na entrada padrão, ex:
   > ./dijkstra 1 2 < test.gr
 
+### Gerando graficos com os resultados ###
+Para gerar os resultados a partir dos arquivos resultantes dos testes, utilizando o programa gnuplot:
+> gnuplot> set term svg enh
+> Terminal type set to 'svg'
+> Options are 'size 600,480 fixed enhanced fname 'Arial'  fsize 12 butt solid '
+> gnuplot> set output "experiment-0.1-deletemin.svg"
+> gnuplot> set ylabel "deletemin"
+> gnuplot> set xlabel "number of vertices"
+> gnuplot> set xtics border in nomirror rangelimit
+> gnuplot> set ytics border in nomirror rangelimit
+> gnuplot> set border 3 front linetype -1 linewidth 1.000
+> gnuplot> set title "0.1 chance of existing edges between vertices - deletemin"
+> gnuplot> plot "experiment-0.1-deletemin" using 1:2:(0):($4-$2) with vec nohead lt -1 notit, "" using 1:3 w p lt 1 ps 0.6 pt 7 notit
+> gnuplot> exit
+
+
 5 Experimentos e Resultados
 ---------------------------
 Os dados foram gerados, randomicamente, utilizando o gerador de casos de testes fornecido (gen.cpp) com numero de vértices variando de 100, 200, 300,..., 2000 e a chance de existir arestas entre cada vertice 0.1, 0.5, 0.7 e 0.9.
@@ -79,6 +95,10 @@ Por isso a utilização de uma boa estrutura de dados para a fila de prioridades
 Veja abaixo os resultados das experimentações práticas.
 
 #### deletemin ####
+[0.1 chance of existing edges between vertices - deletemin](tests/10/experiment-0.1-deletemin.svg)
+[0.5 chance of existing edges between vertices - deletemin](tests/50/experiment-0.5-deletemin.svg)
+[0.7 chance of existing edges between vertices - deletemin](tests/70/experiment-0.7-deletemin.svg)
+[0.9 chance of existing edges between vertices - deletemin](tests/90/experiment-0.9-deletemin.svg)
 
 #### insert ####
 
