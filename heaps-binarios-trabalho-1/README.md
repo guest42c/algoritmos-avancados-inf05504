@@ -95,18 +95,29 @@ Por isso a utilização de uma boa estrutura de dados para a fila de prioridades
 Veja abaixo os resultados das experimentações práticas.
 
 #### deletemin ####
-[0.1 chance of existing edges between vertices - deletemin](tests/10/experiment-0.1-deletemin.svg)
-[0.5 chance of existing edges between vertices - deletemin](tests/50/experiment-0.5-deletemin.svg)
-[0.7 chance of existing edges between vertices - deletemin](tests/70/experiment-0.7-deletemin.svg)
-[0.9 chance of existing edges between vertices - deletemin](tests/90/experiment-0.9-deletemin.svg)
+![0.1 chance of existing edges between vertices - deletemin](/tests/10/experiment-0.1-deletemin.svg)
+![0.5 chance of existing edges between vertices - deletemin](/tests/50/experiment-0.5-deletemin.svg)
+![0.7 chance of existing edges between vertices - deletemin](/tests/70/experiment-0.7-deletemin.svg)
+![0.9 chance of existing edges between vertices - deletemin](/tests/90/experiment-0.9-deletemin.svg)
 
 #### insert ####
+![0.1 chance of existing edges between vertices - insert](/tests/10/experiment-0.1-insert.svg)
+![0.5 chance of existing edges between vertices - insert](/tests/50/experiment-0.5-insert.svg)
+![0.7 chance of existing edges between vertices - insert](/tests/70/experiment-0.7-insert.svg)
+![0.9 chance of existing edges between vertices - insert](/tests/90/experiment-0.9-insert.svg)
 
 #### update ####
+![0.1 chance of existing edges between vertices - update](/tests/10/experiment-0.1-update.svg)
+![0.5 chance of existing edges between vertices - update](/tests/50/experiment-0.5-update.svg)
+![0.7 chance of existing edges between vertices - update](/tests/70/experiment-0.7-update.svg)
+![0.9 chance of existing edges between vertices - update](/tests/90/experiment-0.9-update.svg)
 
 ### Tempo de execução ###
 Abaixo os resultados dos tempos de execução medidos:
+![0.1 chance of existing edges between vertices - running time](/tests/10/experiment-0.1-time.svg)
+![0.5 chance of existing edges between vertices - running time](/tests/50/experiment-0.5-time.svg)
+![0.7 chance of existing edges between vertices - running time](/tests/70/experiment-0.7-time.svg)
+![0.9 chance of existing edges between vertices - running time](/tests/90/experiment-0.9-time.svg)
 
 
-![Under Construction](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSND5PcVVp5hZtD6up1CMsK4CwOyxoycX9CfGJlgL-OSYrRiETt)
 
