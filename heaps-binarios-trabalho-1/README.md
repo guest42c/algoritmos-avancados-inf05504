@@ -93,31 +93,30 @@ O algoritmo de Dijkstra possui complexidade:
 Por isso a utilização de uma boa estrutura de dados para a fila de prioridades utilizada no algoritmo de dijkstra é crucial para se obter complexidade melhor que quadrática. Utilizando um heap binário tem-se complexidade O(n log n + m log n). Isso porque é possivel realizar as operações de insert, deletemin e update em O(log n).
 
 Veja abaixo os resultados das experimentações práticas.
-
 #### deletemin ####
-<img src="https://github.com/guilhermeka/algoritmos-avancados-inf05504/blob/master/heaps-binarios-trabalho-1/tests/10/experiment-0.1-deletemin.svg"/>
-<img src="https://github.com/guilhermeka/algoritmos-avancados-inf05504/blob/master/heaps-binarios-trabalho-1/tests/50/experiment-0.5-deletemin.svg"/>
-<img src="https://github.com/guilhermeka/algoritmos-avancados-inf05504/blob/master/heaps-binarios-trabalho-1/tests/70/experiment-0.7-deletemin.svg"/>
-<img src="https://github.com/guilhermeka/algoritmos-avancados-inf05504/blob/master/heaps-binarios-trabalho-1/tests/90/experiment-0.9-deletemin.svg"/>
+![0.1 chance of existing edges between vertices - deletemin](https://github.com/guilhermeka/algoritmos-avancados-inf05504/blob/master/heaps-binarios-trabalho-1/tests/10/experiment-0.1-deletemin.png)
+![0.5 chance of existing edges between vertices - deletemin](https://github.com/guilhermeka/algoritmos-avancados-inf05504/blob/master/heaps-binarios-trabalho-1/tests/50/experiment-0.5-deletemin.png)
+![0.7 chance of existing edges between vertices - deletemin](https://github.com/guilhermeka/algoritmos-avancados-inf05504/blob/master/heaps-binarios-trabalho-1/tests/70/experiment-0.7-deletemin.png)
+![0.9 chance of existing edges between vertices - deletemin](https://github.com/guilhermeka/algoritmos-avancados-inf05504/blob/master/heaps-binarios-trabalho-1/tests/90/experiment-0.9-deletemin.png)
 
 #### insert ####
-<img src="https://github.com/guilhermeka/algoritmos-avancados-inf05504/blob/master/heaps-binarios-trabalho-1/tests/10/experiment-0.1-insert.svg"/>
-<img src="https://github.com/guilhermeka/algoritmos-avancados-inf05504/blob/master/heaps-binarios-trabalho-1/tests/50/experiment-0.5-insert.svg"/>
-<img src="https://github.com/guilhermeka/algoritmos-avancados-inf05504/blob/master/heaps-binarios-trabalho-1/tests/70/experiment-0.7-insert.svg"/>
-<img src="https://github.com/guilhermeka/algoritmos-avancados-inf05504/blob/master/heaps-binarios-trabalho-1/tests/90/experiment-0.9-insert.svg"/>
+![0.1 chance of existing edges between vertices - insert](https://github.com/guilhermeka/algoritmos-avancados-inf05504/blob/master/heaps-binarios-trabalho-1/tests/10/experiment-0.1-insert.png)
+![0.5 chance of existing edges between vertices - insert](https://github.com/guilhermeka/algoritmos-avancados-inf05504/blob/master/heaps-binarios-trabalho-1/tests/50/experiment-0.5-insert.png)
+![0.7 chance of existing edges between vertices - insert](https://github.com/guilhermeka/algoritmos-avancados-inf05504/blob/master/heaps-binarios-trabalho-1/tests/70/experiment-0.7-insert.png)
+![0.9 chance of existing edges between vertices - insert](https://github.com/guilhermeka/algoritmos-avancados-inf05504/blob/master/heaps-binarios-trabalho-1/tests/90/experiment-0.9-insert.png)
 
 #### update ####
-<img src="https://github.com/guilhermeka/algoritmos-avancados-inf05504/blob/master/heaps-binarios-trabalho-1/tests/10/experiment-0.1-update.svg"/>
-<img src="https://github.com/guilhermeka/algoritmos-avancados-inf05504/blob/master/heaps-binarios-trabalho-1/tests/50/experiment-0.5-update.svg"/>
-<img src="https://github.com/guilhermeka/algoritmos-avancados-inf05504/blob/master/heaps-binarios-trabalho-1/tests/70/experiment-0.7-update.svg"/>
-<img src="https://github.com/guilhermeka/algoritmos-avancados-inf05504/blob/master/heaps-binarios-trabalho-1/tests/90/experiment-0.9-update.svg"/>
+![0.1 chance of existing edges between vertices - update](https://github.com/guilhermeka/algoritmos-avancados-inf05504/blob/master/heaps-binarios-trabalho-1/tests/10/experiment-0.1-update.png)
+![0.5 chance of existing edges between vertices - update](https://github.com/guilhermeka/algoritmos-avancados-inf05504/blob/master/heaps-binarios-trabalho-1/tests/50/experiment-0.5-update.png)
+![0.7 chance of existing edges between vertices - update](https://github.com/guilhermeka/algoritmos-avancados-inf05504/blob/master/heaps-binarios-trabalho-1/tests/70/experiment-0.7-update.png)
+![0.9 chance of existing edges between vertices - update](https://github.com/guilhermeka/algoritmos-avancados-inf05504/blob/master/heaps-binarios-trabalho-1/tests/90/experiment-0.9-update.png)
 
 ### Tempo de execução ###
 Abaixo os resultados dos tempos de execução medidos:
-<img src="https://github.com/guilhermeka/algoritmos-avancados-inf05504/blob/master/heaps-binarios-trabalho-1/tests/10/experiment-0.1-time.svg"/>
-<img src="https://github.com/guilhermeka/algoritmos-avancados-inf05504/blob/master/heaps-binarios-trabalho-1/tests/50/experiment-0.5-time.svg"/>
-<img src="https://github.com/guilhermeka/algoritmos-avancados-inf05504/blob/master/heaps-binarios-trabalho-1/tests/70/experiment-0.7-time.svg"/>
-<img src="https://github.com/guilhermeka/algoritmos-avancados-inf05504/blob/master/heaps-binarios-trabalho-1/tests/90/experiment-0.9-time.svg"/>
+![0.1 chance of existing edges between vertices - running time](https://github.com/guilhermeka/algoritmos-avancados-inf05504/blob/master/heaps-binarios-trabalho-1/tests/10/experiment-0.1-time.png)
+![0.5 chance of existing edges between vertices - running time](https://github.com/guilhermeka/algoritmos-avancados-inf05504/blob/master/heaps-binarios-trabalho-1/tests/50/experiment-0.5-time.png)
+![0.7 chance of existing edges between vertices - running time](https://github.com/guilhermeka/algoritmos-avancados-inf05504/blob/master/heaps-binarios-trabalho-1/tests/70/experiment-0.7-time.png)
+![0.9 chance of existing edges between vertices - running time](https://github.com/guilhermeka/algoritmos-avancados-inf05504/blob/master/heaps-binarios-trabalho-1/tests/90/experiment-0.9-time.png)
 
 
 
