@@ -17,7 +17,9 @@ Trabalho 1 (Heaps binários)
 ---------
 Implementei o algoritmo de Dijkstra utilizando um heap binário de acordo com o material e pseudo algoritmos retirados do material do prof. [Marcus Ritt](http://www.inf.ufrgs.br/~mrpritt/doku.php?id=homepage "Marcus Riit").
 
-TODO: Adicionar pseudo algoritmos aqui
+*TODO*: Adicionar pseudo algoritmos aqui
+
+*Porem na implementação realizada, o algoritmo termina ao encontrar o menor caminho para o vértice destino.*
 
 3 Ambiente de testes
 --------------------
@@ -41,7 +43,7 @@ Compile o programa dijkstra
   > c++ dijkstra dijkstra.cpp
 
 ### Script de testes ###
-O script de testes gera grafos de testes (aleatorio) e executa dijkstra para o grafo resultante. Ele repete isso 10 vezes para cada uma das quantidades de vertices (100,200,300,...,2000) dado uma determinada probabilidade (input).
+O script de testes gera grafos de testes (aleatorios) e executa dijkstra para o grafo resultante. Ele repete isso 10 vezes para cada uma das quantidades de vertices (100, 200, 300, ..., 2000) dado uma determinada probabilidade de existencia de arestas entre cada um dos vertices (input).
 
   > ./run\_tests.sh
 
@@ -50,6 +52,7 @@ O script de teste irá gerar os seguintes arquivos, para uma probabilidade de 0.
 * experiment-0.5-deletemin, contem o maior número de chamadas, a média e o menor número de chamadas a insert para o determinado número de vertices.
 * experiment-0.5-insert, contem o maior número de chamadas, a média e o menor número de chamadas a insert para o determinado número de vertices. 
 * experiment-0.5-update, contem o maior número de chamadas, a média e o menor número de chamadas a update para o determinado número de arestas. 
+* experiment-0.5-all, contem os dados experimentais de cada uma das execuções.
 
 
 ### Gerando casos de teste (grafos) ###
@@ -86,7 +89,7 @@ Cada combinação de teste foi repetida 10 vezes, gerado a média, maxima e mini
 * Chamadas a insert()
 * Chamadas a update()
 
-### Chamadas a deletemin, insert e update ###
+### Analise e discussão dos resultados ###
 O algoritmo de Dijkstra possui complexidade:
   > O(n) + n x deletemin + n x insert + m x update. 
 
@@ -95,6 +98,8 @@ Por isso a utilização de uma boa estrutura de dados para a fila de prioridades
 Veja abaixo os resultados das experimentações práticas.
 
 #### deletemin ####
+Podemos ver que o número de operações deletemin nos piores casos tem um crescimento linear O(n) em reação ao número de vértices do grafo (máximo obtido). O que esta de acordo com a complexidade teórica de Dijkstra. Na prática, a média fica próximo de n/2 para um grafo esparso (poucas arestas - 0.1) e para grafos mais densos (0.5 - 0.9) ainda possui a média bem abaixo do limite máximo. Nos melhores casos, o número de operações deletemin podem ser mínimas.
+
 ![0.1 chance of existing edges between vertices - deletemin](https://raw.github.com/guilhermeka/algoritmos-avancados-inf05504/master/heaps-binarios-trabalho-1/tests/10/experiment-0.1-deletemin.png)
 ![0.5 chance of existing edges between vertices - deletemin](https://raw.github.com/guilhermeka/algoritmos-avancados-inf05504/master/heaps-binarios-trabalho-1/tests/50/experiment-0.5-deletemin.png)
 ![0.7 chance of existing edges between vertices - deletemin](https://raw.github.com/guilhermeka/algoritmos-avancados-inf05504/master/heaps-binarios-trabalho-1/tests/70/experiment-0.7-deletemin.png)
