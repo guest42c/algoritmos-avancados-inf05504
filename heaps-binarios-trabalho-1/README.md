@@ -15,9 +15,7 @@ Trabalho 1 (Heaps binários)
 
 2 Solução
 ---------
-Implementei o algoritmo de Dijkstra utilizando um heap binário de acordo com o material e pseudo algoritmos retirados do material do prof. [Marcus Ritt](http://www.inf.ufrgs.br/~mrpritt/doku.php?id=homepage "Marcus Riit").
-
-*TODO*: Adicionar pseudo algoritmos aqui
+Implementei o algoritmo de Dijkstra utilizando um heap binário de acordo com o material e pseudo algoritmos retirados do material do prof. [Marcus Ritt](http://www.inf.ufrgs.br/~mrpritt/doku.php?id=inf05504:homepage "Marcus Riit").
 
 *Porem na implementação realizada, o algoritmo termina ao encontrar o menor caminho para o vértice destino.*
 
@@ -106,22 +104,28 @@ Podemos ver que o número de operações deletemin nos piores casos tem um cresc
 ![0.9 chance of existing edges between vertices - deletemin](https://raw.github.com/guilhermeka/algoritmos-avancados-inf05504/master/heaps-binarios-trabalho-1/tests/90/experiment-0.9-deletemin.png)
 
 #### insert ####
+Em todos casos de testes, o algoritmo apresentou um comportamento bastante consistente no número de operações insert, ou seja, um crescimento linear ao número de vertices do grafo.
+
 ![0.1 chance of existing edges between vertices - insert](https://raw.github.com/guilhermeka/algoritmos-avancados-inf05504/master/heaps-binarios-trabalho-1/tests/10/experiment-0.1-insert.png)
 ![0.5 chance of existing edges between vertices - insert](https://raw.github.com/guilhermeka/algoritmos-avancados-inf05504/master/heaps-binarios-trabalho-1/tests/50/experiment-0.5-insert.png)
 ![0.7 chance of existing edges between vertices - insert](https://raw.github.com/guilhermeka/algoritmos-avancados-inf05504/master/heaps-binarios-trabalho-1/tests/70/experiment-0.7-insert.png)
 ![0.9 chance of existing edges between vertices - insert](https://raw.github.com/guilhermeka/algoritmos-avancados-inf05504/master/heaps-binarios-trabalho-1/tests/90/experiment-0.9-insert.png)
 
 ### update ####
+Teoricamente temos um crescimento linear no número de operações update em relação ao número de arestas do grafo, o que considera o pior caso. No entanto, na prática podemos verificar que isso é muito dificil de acontecer, seja para grafos densos ou esparsos. Pelo gráfico podemos ver que na prática é realmente muito menor que o valor esperado (reta x em azul).
+
 ![0.1 chance of existing edges between vertices - update](https://raw.github.com/guilhermeka/algoritmos-avancados-inf05504/master/heaps-binarios-trabalho-1/tests/10/experiment-0.1-update.png)
 ![0.5 chance of existing edges between vertices - update](https://raw.github.com/guilhermeka/algoritmos-avancados-inf05504/master/heaps-binarios-trabalho-1/tests/50/experiment-0.5-update.png)
 ![0.7 chance of existing edges between vertices - update](https://raw.github.com/guilhermeka/algoritmos-avancados-inf05504/master/heaps-binarios-trabalho-1/tests/70/experiment-0.7-update.png)
 ![0.9 chance of existing edges between vertices - update](https://raw.github.com/guilhermeka/algoritmos-avancados-inf05504/master/heaps-binarios-trabalho-1/tests/90/experiment-0.9-update.png)
 
 ### Tempo de execução ###
-Abaixo os resultados dos tempos de execução medidos:
+Por fim temos abaixo os resultados dos tempos de execução medidos de acordo com o crescimento no número de vértices do grafo. Nos resultados, para os números de vértices testados, obtivemos uma média abaixo da curva n\*log n. Se aproximando do limite quando temos um grafo mais denso e com números grandes de arestas. Tambem ficou acima de n\*log n em alguns tempos máximos medidos. Mas isso não vai contra a teoria em que temos O(n log n + m log n).
+
 ![0.1 chance of existing edges between vertices - running time](https://raw.github.com/guilhermeka/algoritmos-avancados-inf05504/master/heaps-binarios-trabalho-1/tests/10/experiment-0.1-time.png)
 ![0.5 chance of existing edges between vertices - running time](https://raw.github.com/guilhermeka/algoritmos-avancados-inf05504/master/heaps-binarios-trabalho-1/tests/50/experiment-0.5-time.png)
 ![0.7 chance of existing edges between vertices - running time](https://raw.github.com/guilhermeka/algoritmos-avancados-inf05504/master/heaps-binarios-trabalho-1/tests/70/experiment-0.7-time.png)
 ![0.9 chance of existing edges between vertices - running time](https://raw.github.com/guilhermeka/algoritmos-avancados-inf05504/master/heaps-binarios-trabalho-1/tests/90/experiment-0.9-time.png)
 
-
+### Conclusão ###
+Podemos concluir que o algoritmo de Dijkstra utilizando heaps binários para implementar a fila de prioridades respeita o limite teórico e ainda possui um desempenho melhor na prática.
