@@ -113,4 +113,4 @@ Por fim temos abaixo os resultados dos tempos de execução medidos de acordo co
 ![0.9 chance of existing edges between vertices - running time](https://raw.github.com/guilhermeka/algoritmos-avancados-inf05504/master/heaps-binarios-trabalho-1/tests/90/experiment-0.9-time.png)
 
 ### Conclusão ###
-Os resultados vão de encontro com a teoria em que temos O(n log n + m log n) para Dijkstra utilizando heap binário em sua fila de prioridades. Podemos concluir que o algoritmo respeita o limite teórico e possui um desempenho muito bom na prática.
+Os resultados estão de acordo com a teoria em que temos O(n log n + m log n) para Dijkstra utilizando heap binário em sua fila de prioridades. Podemos concluir que o algoritmo respeita o limite teórico e possui um desempenho muito bom na prática.
