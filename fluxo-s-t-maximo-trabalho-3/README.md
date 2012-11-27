@@ -22,9 +22,7 @@ Fluxo s-t máximo
 
 3 Ambiente de testes
 --------------------
-
-
-
+Os resultados foram obtidos num desktop, com processador Intel Core 2 Duo E8400 de 3 GHz, e 4 GB de RAM. Rodando Fedora 16, Kernel Linux 3.6.6-1.fc16.x86\_64.
 
 4 Como executar e testar
 ------------------------
