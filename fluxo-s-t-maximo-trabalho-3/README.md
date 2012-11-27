@@ -29,6 +29,8 @@ Fluxo s-t máximo
 4 Como executar e testar
 ------------------------
 
+### Para gerar grafos para os testes
+
 To use:  cc washington.c -o gengraph
                       gengraph function arg1 arg2 arg3
 
@@ -57,6 +59,12 @@ To use:  cc washington.c -o gengraph
 Exemplo:
 Para Mesh Graph com 5 linhas e 5 colunas, capacidade maxima 100 e escreve no arquivo "teste"
 > ./gengraph 1 5 5 100 teste
+
+
+### Programa para verificação da resposta
+
+maxflow.cpp
+
 
 
 5 Experimentos e Resultados
