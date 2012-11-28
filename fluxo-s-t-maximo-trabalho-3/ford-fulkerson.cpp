@@ -145,8 +145,46 @@ int Heap::parent(int child) {
   return -1;
 }
 
-void find_path(int *flow) {
-  *flow = 0;  
+void dfs(Graph g, int vertice) {
+
+}
+
+int[] find_path(int from, int to, Graph g) {
+  
+  //Temporariamente busca por profundidade
+  int path[num_edges(g)];
+  int total_edges = num_edges(g);
+  int total_vertices = num_vertices(g);
+  int visited_edges[total_edges][total_edges];
+
+
+  int i = 0;
+  path[i] = from;
+
+  //Implement path search
+
+  /*
+  while (path[i] != to) {
+    typedef boost::property_map<Graph, boost::vertex_index_t>::type IndexMap;
+    IndexMap index = get(boost::vertex_index, g);
+    typedef boost::graph_traits < Graph >::adjacency_iterator adjacency_iterator;
+    std::pair<adjacency_iterator, adjacency_iterator> ngs = boost::adjacent_vertices(vertex(path[i],g), g);
+    bool found = false;     
+    for(; ngs.first != ngs.second; ++ngs.first) {
+      int u = index[*ngs.first];
+      Edge e = edge(path[i],u,g).first;
+      if (g[e].weight > 0) {
+        i++;
+        path[i] = u;
+      }
+    }
+    if (!found) {
+      path[0] = -1;
+      break;
+    }
+  }
+  */
+  return path;  
 }
 
 int main (int argc, char *argv[]) {
@@ -173,24 +211,21 @@ int main (int argc, char *argv[]) {
   
   /*** Ford-Fulkerson ***/ 
   int total_edges = num_edges(g);
-  int flow[total_edges+1];
-  for (int i=0; i < num_edges(g); i++) flow[i] = 0;
-
   int result = 0;
 
   while (1) {
-    int flow = 0;
+    int inc_flow = 1;
     int path[total_edges];
-    find_path(&flow);
+    find_path(&inc_flow, &path, g);
     int size=sizeof path/sizeof(int);
     if (flow == 0) break;
     for(int i = 0; i < size-1; i++) {
       Edge e = edge(path[i],path[i+1],g).first;
-      g[e].weight += flow; //incrementa o fluxo
+      g[e].weight += inc_flow; //incrementa o fluxo
     }  
   }
   
-  cout << result;
+  cout << result << endl;
 
   /*** Dijkstra
   //cout << "Calculating distance from " << from << " to " << to << endl;
