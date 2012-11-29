@@ -149,42 +149,39 @@ void dfs(Graph g, int vertice) {
 
 }
 
-int[] find_path(int from, int to, Graph g) {
+stack<int> find_path(int from, int to, Graph g) {
   
   //Temporariamente busca por profundidade
-  int path[num_edges(g)];
   int total_edges = num_edges(g);
   int total_vertices = num_vertices(g);
   int visited_edges[total_edges][total_edges];
-
-
-  int i = 0;
-  path[i] = from;
-
-  //Implement path search
-
-  /*
-  while (path[i] != to) {
+  
+  //Implement path search (dfs)
+  stack<int> nodes;
+  nodes.push(from);
+  int current_node;
+  while (!nodes.empty()) {
+    current_node = nodes.top();
+    if (current_node == to) break;
     typedef boost::property_map<Graph, boost::vertex_index_t>::type IndexMap;
     IndexMap index = get(boost::vertex_index, g);
     typedef boost::graph_traits < Graph >::adjacency_iterator adjacency_iterator;
-    std::pair<adjacency_iterator, adjacency_iterator> ngs = boost::adjacent_vertices(vertex(path[i],g), g);
-    bool found = false;     
+    std::pair<adjacency_iterator, adjacency_iterator> ngs = boost::adjacent_vertices(vertex(current_node,g), g);
+    bool found = false;
     for(; ngs.first != ngs.second; ++ngs.first) {
-      int u = index[*ngs.first];
-      Edge e = edge(path[i],u,g).first;
-      if (g[e].weight > 0) {
-        i++;
-        path[i] = u;
+      int u = index[*ngs.first]; //Alterar se puder ter varias arestas entre os mesmos vertices;
+      Edge e = edge(current_node,u,g).first;
+      if (g[e].weight > 0 && !visited_edges[current_node][u]) {
+        visited_edges[current_node][u] = true;
+        nodes.push(u);
+        found = true;
+        break;
       }
     }
-    if (!found) {
-      path[0] = -1;
-      break;
-    }
+    if (!found) nodes.pop();      
   }
-  */
-  return path;  
+
+  return nodes;
 }
 
 int main (int argc, char *argv[]) {
@@ -214,14 +211,12 @@ int main (int argc, char *argv[]) {
   int result = 0;
 
   while (1) {
-    int inc_flow = 1;
-    int path[total_edges];
-    find_path(&inc_flow, &path, g);
-    int size=sizeof path/sizeof(int);
-    if (flow == 0) break;
-    for(int i = 0; i < size-1; i++) {
-      Edge e = edge(path[i],path[i+1],g).first;
-      g[e].weight += inc_flow; //incrementa o fluxo
+    int inc_flow = 0;
+    stack<int> path = find_path(from, to, g);
+    if (inc_flow == 0) break;
+    for(int i = 0; i < path.size(); i++) {
+      //Edge e = edge(path[i],path[i+1],g).first;
+      //g[e].weight += inc_flow; //incrementa o fluxo
     }  
   }
   
