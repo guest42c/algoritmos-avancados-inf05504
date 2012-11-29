@@ -145,11 +145,7 @@ int Heap::parent(int child) {
   return -1;
 }
 
-void dfs(Graph g, int vertice) {
-
-}
-
-stack<int> find_path(int from, int to, Graph g) {
+vector<int> find_path(int from, int to, Graph g) {
   
   //Temporariamente busca por profundidade
   int total_edges = num_edges(g);
@@ -180,8 +176,26 @@ stack<int> find_path(int from, int to, Graph g) {
     }
     if (!found) nodes.pop();      
   }
+  stack<int> tmp;
+  while (!nodes.empty()) {
+    tmp.push(nodes.top());
+    nodes.pop();
+  }
+  vector<int> path;
+  while (!tmp.empty()) {
+    path.push_back(tmp.top());
+    tmp.pop();
+  }
+  return path;
+}
 
-  return nodes;
+int bottleneck(vector<int> path, Graph g) {
+  int min = maxweight;
+  for (int i=0; i < path.size()-1; i++) {
+    Edge e = edge(path[i],path[i+1],g).first;
+    if (g[e].weight < min) min = g[e].weight;
+  }
+  return min;
 }
 
 int main (int argc, char *argv[]) {
@@ -212,12 +226,16 @@ int main (int argc, char *argv[]) {
 
   while (1) {
     int inc_flow = 0;
-    stack<int> path = find_path(from, to, g);
+    vector<int> path = find_path(from, to, g);
+    if (path.size() > 0) inc_flow = bottleneck(path, g);
     if (inc_flow == 0) break;
-    for(int i = 0; i < path.size(); i++) {
-      //Edge e = edge(path[i],path[i+1],g).first;
-      //g[e].weight += inc_flow; //incrementa o fluxo
-    }  
+    for(int i = 0; i < path.size()-1; i++) {
+      cout << "from " << path[i] << " to " << path[i+1] << endl;
+      Edge e = edge(path[i],path[i+1],g).first;
+      g[e].weight -= inc_flow; //incrementa o fluxo
+      //TODO: adicionar fluxo no grafo residual
+    }
+    result += inc_flow;
   }
   
   cout << result << endl;
