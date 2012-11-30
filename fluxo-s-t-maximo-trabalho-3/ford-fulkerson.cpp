@@ -230,10 +230,20 @@ int main (int argc, char *argv[]) {
     if (path.size() > 0) inc_flow = bottleneck(path, g);
     if (inc_flow == 0) break;
     for(int i = 0; i < path.size()-1; i++) {
-      cout << "from " << path[i] << " to " << path[i+1] << endl;
+      //cout << "from " << path[i] << " to " << path[i+1] << endl;
+      //incrementa fluxo
       Edge e = edge(path[i],path[i+1],g).first;
       g[e].weight -= inc_flow; //incrementa o fluxo
-      //TODO: adicionar fluxo no grafo residual
+      //adiciona fluxo no grafo residual
+      pair<Edge,bool> res_edge = edge(path[i+1], path[i], g);
+      Edge re;
+      if (!res_edge.second) {
+        re = add_edge(path[+1], path[i], g).first;
+        g[re].weight = inc_flow;
+      } else {
+        re = res_edge.first;
+        g[re].weight += inc_flow;
+      }      
     }
     result += inc_flow;
   }
