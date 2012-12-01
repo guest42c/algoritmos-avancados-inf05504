@@ -46,6 +46,7 @@ class Heap {
     void print();
     int size() { return heap.size(); }
   private:
+    int min;
     int left(int parent);
     int right(int parent);
     int parent(int child);
@@ -145,7 +146,74 @@ int Heap::parent(int child) {
   return -1;
 }
 
-vector<int> find_path(int from, int to, Graph g) {
+int getmin(int a, int b) {
+  if (a < b) return a;
+  else return b;
+}
+
+vector<int> find_path_dijkstra(int from, int to, Graph g) {
+  //cout << "Calculating distance from " << from << " to " << to << endl;
+  int previous[num_vertices(g)+1];
+  for (int i = 0; i <= num_vertices(g); i++) previous[i] = 0;
+  bool visited[num_vertices(g)+1];
+  for (int i = 0; i <= num_vertices(g); i++) visited[i] = false;
+  clock_t start, finish;
+  start = clock();
+  int distance[num_vertices(g)+1];
+  for (int i = 0; i < num_vertices(g); i++) {
+    distance[i] = maxweight*2;
+  }
+  distance[from] = 0;
+  Heap* pQueue = new Heap();
+  pQueue->insert(make_pair(from,0));
+  pair<int,int> min = make_pair(from,0);
+  while (pQueue->size() > 0) {
+    int prev = min.first;
+    min = pQueue->deletemin();
+    if (min.first == to) break;
+    visited[min.first] = true;
+    typedef boost::property_map<Graph, boost::vertex_index_t>::type IndexMap;
+    IndexMap index = get(boost::vertex_index, g);
+    typedef boost::graph_traits < Graph >::adjacency_iterator adjacency_iterator;
+    std::pair<adjacency_iterator, adjacency_iterator> ngs = boost::adjacent_vertices(vertex(min.first,g), g);
+    for(; ngs.first != ngs.second; ++ngs.first) {
+      int u = index[*ngs.first];
+      if (!visited[u]) {
+        if (distance[u] > maxweight) {
+          Edge e = edge(min.first,u,g).first;
+          distance[u] = getmin(min.second, g[e].weight);
+          pQueue->insert(make_pair(u,distance[u]));
+          previous[u] = min.first;
+        } else {
+          Edge e = edge(min.first,u,g).first;
+          if ( getmin(min.second,g[e].weight) < distance[u]) {
+            distance[u] = getmin(min.second, g[e].weight);
+            pQueue->update(u,distance[u]);
+            previous[u] = min.first;
+          }
+        }
+      }
+    }
+  }
+
+  int prev = to;
+  stack<int> pathtmp;
+  int dist_sum = 0;
+  while (prev != from) {
+    dist_sum += g[edge(previous[prev],prev,g).first].weight;
+    pathtmp.push(prev);
+    prev = previous[prev];
+  }
+  pathtmp.push(from);
+  vector<int> path; 
+  while (!pathtmp.empty()) {
+    path.push_back(pathtmp.top());
+    pathtmp.pop();
+  }
+  return path;
+}
+
+vector<int> find_path_dfs(int from, int to, Graph g) {
   
   //Temporariamente busca por profundidade
   int total_edges = num_edges(g);
@@ -199,9 +267,10 @@ int bottleneck(vector<int> path, Graph g) {
 }
 
 int main (int argc, char *argv[]) {
-  assert(argc == 3);
+  assert(argc == 4);
   int from = atoi(argv[1]);
   int to = atoi(argv[2]);
+  int search = atoi(argv[3]);
   
   //cout << "Importing graph..." << endl;
   string line;
@@ -226,7 +295,9 @@ int main (int argc, char *argv[]) {
 
   while (1) {
     int inc_flow = 0;
-    vector<int> path = find_path(from, to, g);
+    vector<int> path;
+    if (search == 0) path = find_path_dfs(from, to, g);
+    else path = find_path_dijkstra(from, to, g);
     if (path.size() > 0) inc_flow = bottleneck(path, g);
     if (inc_flow == 0) break;
     for(int i = 0; i < path.size()-1; i++) {
@@ -250,79 +321,4 @@ int main (int argc, char *argv[]) {
   
   cout << result << endl;
 
-  /*** Dijkstra
-  //cout << "Calculating distance from " << from << " to " << to << endl;
-  int previous[num_vertices(g)+1];
-  for (int i = 0; i <= num_vertices(g); i++) previous[i] = 0;
-  bool visited[num_vertices(g)+1];
-  for (int i = 0; i <= num_vertices(g); i++) visited[i] = false;
-  clock_t start, finish;
-  start = clock();
-  int distance[num_vertices(g)+1];
-  for (int i = 0; i < num_vertices(g); i++) {
-    distance[i] = maxweight*2;
-  }
-  distance[from] = 0;
-  Heap* pQueue = new Heap();
-  pQueue->insert(make_pair(from,0));
-  count_insert++;
-  pair<int,int> min = make_pair(from,0);
-  while (pQueue->size() > 0) {
-    int prev = min.first;
-    min = pQueue->deletemin();
-    count_deletemin++;
-    if (min.first == to) break;
-    visited[min.first] = true;
-    typedef boost::property_map<Graph, boost::vertex_index_t>::type IndexMap;
-    IndexMap index = get(boost::vertex_index, g);
-    typedef boost::graph_traits < Graph >::adjacency_iterator adjacency_iterator;
-    std::pair<adjacency_iterator, adjacency_iterator> ngs = boost::adjacent_vertices(vertex(min.first,g), g);
-    for(; ngs.first != ngs.second; ++ngs.first) {
-      int u = index[*ngs.first];
-      if (!visited[u]) {
-        if (distance[u] > maxweight) {
-          Edge e = edge(min.first,u,g).first;
-          distance[u] = (min.second + g[e].weight);
-          pQueue->insert(make_pair(u,distance[u]));
-          count_insert++;
-          previous[u] = min.first;
-        } else {
-          Edge e = edge(min.first,u,g).first;
-          if ( (min.second + g[e].weight) < distance[u]) {
-            distance[u] = (min.second + g[e].weight);
-            pQueue->update(u,distance[u]);
-            count_update++;
-            previous[u] = min.first;
-          }
-        }
-      }
-    }
-  }
-  finish = clock();
-  long elapsed_time = ((double)(finish - start))*1000/CLOCKS_PER_SEC;
-  if (distance[to] == maxweight*2)
-    cout << "inf" << endl;
-  else
-    cout << distance[to] << endl;
-  cerr << num_vertices(g) << "\t" << elapsed_time << "\t" 
-        << num_edges(g) << "\t" << count_deletemin << "\t" << count_insert << "\t" << count_update << endl; 
-  */
-
-  /* Return the path
-  int prev = to;
-  stack<int> path;
-  int dist_sum = 0;
-  while (prev != from) {
-    dist_sum += g[edge(previous[prev],prev,g).first].weight;
-    path.push(prev);
-    prev = previous[prev];
-  }
-  path.push(from);
-  cout << "Path: ";
-  while (!path.empty()) {
-    cout << path.top() << " ";
-    path.pop();
-  }
-  cout << endl << " -> Total distance: " << dist_sum << endl;
-  */
 }
