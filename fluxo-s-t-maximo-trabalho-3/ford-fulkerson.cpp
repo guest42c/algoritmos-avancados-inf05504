@@ -42,7 +42,7 @@ class Heap {
     ~Heap();
     void insert(pair<int,int> element);
     void update(int w, int index);
-    pair<int,int> deletemin();
+    pair<int,int> deletemax();
     void print();
     int size() { return heap.size(); }
   private:
@@ -64,12 +64,12 @@ void Heap::insert(pair<int,int> element) {
   heapifyup(heap.size() - 1);
 }
 
-pair<int,int> Heap::deletemin() {
-  pair<int,int> min = heap.front();
+pair<int,int> Heap::deletemax() {
+  pair<int,int> max = heap.front();
   swap(heap[0],heap[heap.size()-1]);
   heap.pop_back();
   heapifydown(0);
-  return min;
+  return max;
 }
 
 void Heap::update(int _vertex, int w) {
@@ -81,7 +81,7 @@ void Heap::update(int _vertex, int w) {
       break;
     }
   }
-  if (w < heap[index].second) {
+  if (w > heap[index].second) {
     heap[index] = make_pair(vertex,w);
     heapifyup(index);
   } else {
@@ -102,7 +102,7 @@ void Heap::print() {
 
 void Heap::heapifyup(int index) {
   if (index == 0) return;
-  if (heap[parent(index)].second > heap[index].second) {
+  if (heap[parent(index)].second < heap[index].second) {
     swap(heap[parent(index)],heap[index]);
     heapifyup(parent(index));
   }
@@ -113,11 +113,11 @@ void Heap::heapifydown(int index) {
   int child_right = right(index);
   if (child_left == -1 && child_right == -1) return;
   if (child_right == -1) { //one child at left
-    if (heap[child_left].second < heap[index].second) swap(heap[child_left], heap[index]);
-  } else if (child_left == -1) { //one child at right
-    if (heap[child_right].second < heap[index].second) swap(heap[child_right], heap[index]);
-  } else if ((heap[index].second > heap[child_left].second) || (heap[index].second > heap[child_right].second)) { //two children
-    if (heap[child_left].second < heap[child_right].second) {
+    if (heap[child_left].second > heap[index].second) swap(heap[child_left], heap[index]);
+  } else if (child_left == -1) { //one child at right (its possible?!)
+    if (heap[child_right].second > heap[index].second) swap(heap[child_right], heap[index]);
+  } else if ((heap[index].second < heap[child_left].second) || (heap[index].second < heap[child_right].second)) { //two children
+    if (heap[child_left].second > heap[child_right].second) {
       swap(heap[index], heap[child_left]);
       heapifydown(child_left);
     } else {
@@ -146,7 +146,7 @@ int Heap::parent(int child) {
 }
 
 int getmin(int a, int b) {
-  if (a < b) return a;
+  if (a < b && a > 0) return a;
   else return b;
 }
 
@@ -159,49 +159,51 @@ vector<int> find_path_dijkstra(int from, int to, Graph g) {
   for (int i = 0; i <= num_vertices(g); i++) visited[i] = false;
   int distance[num_vertices(g)+1];
   for (int i = 0; i < num_vertices(g); i++) {
-    distance[i] = maxweight*2;
+    distance[i] = -1;
   }
 
   distance[from] = 0;
   Heap* pQueue = new Heap();
   pQueue->insert(make_pair(from,0));
-  pair<int,int> min = make_pair(from,0);
+  pair<int,int> max = make_pair(from,0);
   bool achou = false;
   while (pQueue->size() > 0) {
-    min = pQueue->deletemin();
-    if (min.first == to) { 
+    max = pQueue->deletemax();
+    if (max.first == to) { 
       achou = true;
       break;
     }
-    visited[min.first] = true;
+    visited[max.first] = true;
     typedef boost::property_map<Graph, boost::vertex_index_t>::type IndexMap;
     IndexMap index = get(boost::vertex_index, g);
     typedef boost::graph_traits < Graph >::adjacency_iterator adjacency_iterator;
-    std::pair<adjacency_iterator, adjacency_iterator> ngs = boost::adjacent_vertices(vertex(min.first,g), g);
+    std::pair<adjacency_iterator, adjacency_iterator> ngs = boost::adjacent_vertices(vertex(max.first,g), g);
     bool achou = false;
     for(; ngs.first != ngs.second; ++ngs.first) {
       int u = index[*ngs.first];
-      Edge e = edge(min.first,u,g).first;
+      Edge e = edge(max.first,u,g).first;
       if (!visited[u] && (g[e].weight > 0)) {
         achou = true;
-        if (distance[u] > maxweight) {
-          distance[u] = getmin(min.second, g[e].weight);
+        if (distance[u] < 0) {
+          distance[u] = getmin(max.second, g[e].weight);
           pQueue->insert(make_pair(u,distance[u]));
-          previous[u] = min.first;
+          previous[u] = max.first;
         } else {
-          if ( getmin(min.second, g[e].weight) < distance[u]) {
-            distance[u] = getmin(min.second, g[e].weight);
+          if ( getmin(max.second, g[e].weight) > distance[u]) {
+            distance[u] = getmin(max.second, g[e].weight);
             pQueue->update(u,distance[u]);
-            previous[u] = min.first;
+            previous[u] = max.first;
           }
         }
       }
     }
   }
+  
   if (!achou) {
     vector<int> caminhovazio;
     return caminhovazio;
   }
+
   int prev = to;
   stack<int> pathtmp;
   while (prev != from) {
@@ -212,57 +214,15 @@ vector<int> find_path_dijkstra(int from, int to, Graph g) {
   
   vector<int> path; 
   while (!pathtmp.empty()) {
+    //cout << pathtmp.top() << "(" << distance[pathtmp.top()] << ")  ";
     path.push_back(pathtmp.top());
     pathtmp.pop();
   }
+  //cout << endl;
   
   return path;
 }
-/*
-vector<int> find_path_dfs(int from, int to, Graph g) {
-  
-  //Temporariamente busca por profundidade
-  int total_edges = num_edges(g);
-  int total_vertices = num_vertices(g);
-  int visited_edges[total_edges][total_edges];
-  
-  //Implement path search (dfs)
-  stack<int> nodes;
-  nodes.push(from);
-  int current_node;
-  while (!nodes.empty()) {
-    current_node = nodes.top();
-    if (current_node == to) break;
-    typedef boost::property_map<Graph, boost::vertex_index_t>::type IndexMap;
-    IndexMap index = get(boost::vertex_index, g);
-    typedef boost::graph_traits < Graph >::adjacency_iterator adjacency_iterator;
-    std::pair<adjacency_iterator, adjacency_iterator> ngs = boost::adjacent_vertices(vertex(current_node,g), g);
-    bool found = false;
-    for(; ngs.first != ngs.second; ++ngs.first) {
-      int u = index[*ngs.first]; //Alterar se puder ter varias arestas entre os mesmos vertices;
-      Edge e = edge(current_node,u,g).first;
-      if (g[e].weight > 0 && !visited_edges[current_node][u]) {
-        visited_edges[current_node][u] = true;
-        nodes.push(u);
-        found = true;
-        break;
-      }
-    }
-    if (!found) nodes.pop();      
-  }
-  stack<int> tmp;
-  while (!nodes.empty()) {
-    tmp.push(nodes.top());
-    nodes.pop();
-  }
-  vector<int> path;
-  while (!tmp.empty()) {
-    path.push_back(tmp.top());
-    tmp.pop();
-  }
-  return path;
-}
-*/
+
 int bottleneck(vector<int> path, Graph g) {
   int min = maxweight;
   for (int i=0; i < path.size()-1; i++) {
@@ -304,7 +264,6 @@ int main (int argc, char *argv[]) {
     if (path.size() > 0) inc_flow = bottleneck(path, g);
     if (inc_flow == 0) break;
     for(int i = 0; i < path.size()-1; i++) {
-      //cout << "from " << path[i] << " to " << path[i+1] << endl;
       //incrementa fluxo
       Edge e = edge(path[i],path[i+1],g).first;
       g[e].weight -= inc_flow; //incrementa o fluxo
@@ -319,9 +278,10 @@ int main (int argc, char *argv[]) {
         g[re].weight += inc_flow;
       }      
     }
+    cout << "+" << inc_flow << endl;
     result += inc_flow;
   }
-  
+   
   cout << result << endl;
 
 }
