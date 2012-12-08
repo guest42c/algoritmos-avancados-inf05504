@@ -30,7 +30,7 @@ struct EdgeInformation {
 };
       
 const unsigned maxweight = 9999999;
-        
+
 // graph is an adjacency list represented by vectors
 typedef adjacency_list<vecS, vecS, directedS,VertexInformation,EdgeInformation> Graph;
 typedef graph_traits<Graph>::vertex_descriptor Node;
@@ -233,13 +233,14 @@ int bottleneck(vector<int> path, Graph g) {
 }
 
 int main (int argc, char *argv[]) {
-  assert(argc == 3);
-  int from = atoi(argv[1]);
-  int to = atoi(argv[2]);
+  assert(argc == 1);
+  int from;// = atoi(argv[1]);
+  int to; // = atoi(argv[2]);
   
   //cout << "Importing graph..." << endl;
   string line;
   Graph g;
+  bool found_s = false;
   while (cin) {
     getline(cin, line);
     vector<string> tokens;
@@ -251,13 +252,24 @@ int main (int argc, char *argv[]) {
       Edge e = add_edge( atoi(tokens[1].c_str()), atoi(tokens[2].c_str()), g).first;
       g[e].weight = atoi(tokens[3].c_str());
     } 
+    else if (tokens.size() && tokens[0] == "n") {
+       if (!found_s) {
+          from = atoi(tokens[1].c_str());
+          found_s = true;
+       } else {
+          to = atoi(tokens[1].c_str());
+       }
+    }
   };
   //cout << "Finished importing" <<  endl;
   
   /*** Ford-Fulkerson ***/ 
   int total_edges = num_edges(g);
+  int total_vertices = num_vertices(g);
   int result = 0;
-
+  int count_iter = 0;
+  clock_t start, finish;
+  start = clock();
   while (1) {
     int inc_flow = 0;
     vector<int> path = find_path_dijkstra(from, to, g);
@@ -278,10 +290,11 @@ int main (int argc, char *argv[]) {
         g[re].weight += inc_flow;
       }      
     }
-    cout << "+" << inc_flow << endl;
     result += inc_flow;
+    count_iter++;
   }
-   
+  finish = clock();
+  long elapsed_time = ((double)(finish-start))*1000/CLOCKS_PER_SEC; 
   cout << result << endl;
-
+  cerr << total_vertices << " " << total_edges << " " << count_iter << " " << elapsed_time << endl;
 }
