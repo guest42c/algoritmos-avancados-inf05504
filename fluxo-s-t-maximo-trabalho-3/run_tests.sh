@@ -20,7 +20,7 @@ do
     ./ford-fulkerson < "test-$type-$dim1-$dim2-$range.gr" 2>> "run.tmp"
     rm "test-$type-$dim1-$dim2-$range.gr"
   done
-  total_vertices=$(awk '{x+=$1;next}END{print x/NR}' "run.tmp")
+  limU=$(awk '{x+=$1;next}END{print x/NR}' "run.tmp")
   total_edges=$(awk '{x+=$2;next}END{print x/NR}' "run.tmp")
   count_iter=$(awk '{x+=$3;next}END{print x/NR}' "run.tmp")
   elapsed_time=$(awk '{x+=$4;next}END{print x/NR}' "run.tmp")
@@ -31,5 +31,5 @@ do
   cat run.tmp >> "experiment-$dim1-$dim2-$range-all"
   rm run.tmp
   echo $total_edges $min_time $elapsed_time $max_time >> "experiment-$dim1-$dim2-$range-time"
-  echo $total_adges $min_count_iter $count_iter $max_count_iter >> "experiment-$dim1-$dim2-$range-iter"
+  echo $total_edges $min_count_iter $count_iter $max_count_iter $limU >> "experiment-$dim1-$dim2-$range-iter"
 done   

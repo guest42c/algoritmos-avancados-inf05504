@@ -236,7 +236,7 @@ int main (int argc, char *argv[]) {
   assert(argc == 1);
   int from;// = atoi(argv[1]);
   int to; // = atoi(argv[2]);
-  
+  int limU = 0;
   //cout << "Importing graph..." << endl;
   string line;
   Graph g;
@@ -251,6 +251,7 @@ int main (int argc, char *argv[]) {
     if (tokens.size() && tokens[0] == "a") {
       Edge e = add_edge( atoi(tokens[1].c_str()), atoi(tokens[2].c_str()), g).first;
       g[e].weight = atoi(tokens[3].c_str());
+      if (limU < g[e].weight) limU = g[e].weight; 
     } 
     else if (tokens.size() && tokens[0] == "n") {
        if (!found_s) {
@@ -296,5 +297,5 @@ int main (int argc, char *argv[]) {
   finish = clock();
   long elapsed_time = ((double)(finish-start))*1000/CLOCKS_PER_SEC; 
   cout << result << endl;
-  cerr << total_vertices << " " << total_edges << " " << count_iter << " " << elapsed_time << endl;
+  cerr << limU << " " << total_edges << " " << count_iter << " " << elapsed_time << endl;
 }
