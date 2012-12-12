@@ -89,6 +89,7 @@ To use:  cc washington.c -o gengraph
                  Cheryian            11 dim1 dim2  range
                       (last 2 are bad for goldberg's algorithm)
 
+TODO: inserir tabela (imagem) com descrição do tipo de funções
 
 Exemplo:
 Para Mesh Graph com 5 linhas e 5 colunas, capacidade maxima 100 e escreve no arquivo "teste"
