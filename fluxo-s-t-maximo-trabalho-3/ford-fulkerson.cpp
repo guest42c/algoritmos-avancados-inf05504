@@ -297,5 +297,5 @@ int main (int argc, char *argv[]) {
   finish = clock();
   long elapsed_time = ((double)(finish-start))*1000/CLOCKS_PER_SEC; 
   cout << result << endl;
-  cerr << limU << " " << total_edges << " " << count_iter << " " << elapsed_time << endl;
+  cerr << limU << " " << total_edges << " " << count_iter << " " << elapsed_time << " " << total_vertices << endl;
 }
