@@ -92,32 +92,32 @@
 		<text><tspan> 8000</tspan></text>
 	</g>
 	<path  d='M71.9,54.1 L71.9,422.4 L575.0,422.4 L575.0,54.1 L71.9,54.1 Z  h0.01'/>	<g transform="translate(17.6,238.3) rotate(270)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:middle">
-		<text><tspan>Iterations</tspan></text>
+		<text><tspan>Iterações</tspan></text>
 	</g>
 	<g transform="translate(323.4,471.9)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:middle">
-		<text><tspan>Number of edges</tspan></text>
+		<text><tspan>Número de arestas</tspan></text>
 	</g>
 	<g transform="translate(323.4,31.6)" style="stroke:none; fill:black; font-family:Arial; font-size:12.00pt; text-anchor:middle">
-		<text><tspan>Iterations growth</tspan></text>
+		<text><tspan>Crescimento das iterações</tspan></text>
 	</g>
 </g>
 	<g id="gnuplot_plot_1" ><title>gnuplot_plot_1</title>
 <g style="fill:none; color:black; stroke:currentColor; stroke-width:1.00; stroke-linecap:butt; stroke-linejoin:miter">
-	<path  d='M76.3,411.8 L76.3,403.2 M90.1,392.5 L90.1,382.7 M113.4,376.6 L113.4,358.6 M146.1,358.6 L146.1,341.8 
-		M188.2,340.1 L188.2,320.9 M239.8,320.1 L239.8,301.3 M300.8,294.3 L300.8,280.0 M371.2,279.2 L371.2,262.0 
-		M451.1,266.9 L451.1,241.1 M540.4,241.9 L540.4,217.4  h0.01'/></g>
+	<path  d='M76.3,409.7 L76.3,404.0 M90.1,394.2 L90.1,382.7 M113.4,375.3 L113.4,361.4 M146.1,354.5 L146.1,342.2 
+		M188.2,339.3 L188.2,329.5 M239.8,318.0 L239.8,299.6 M300.8,298.4 L300.8,282.9 M371.2,281.2 L371.2,266.1 
+		M451.1,262.4 L451.1,246.0 M540.4,241.9 L540.4,216.2  h0.01'/></g>
 	</g>
 	<g id="gnuplot_plot_2" ><title>gnuplot_plot_2</title>
 <g style="fill:none; color:red; stroke:currentColor; stroke-width:1.00; stroke-linecap:butt; stroke-linejoin:miter">
 	<use xlink:href='#gpPt6' transform='translate(76.3,407.9) scale(2.70)'/>
-	<use xlink:href='#gpPt6' transform='translate(90.1,389.1) scale(2.70)'/>
-	<use xlink:href='#gpPt6' transform='translate(113.4,368.9) scale(2.70)'/>
-	<use xlink:href='#gpPt6' transform='translate(146.1,351.6) scale(2.70)'/>
-	<use xlink:href='#gpPt6' transform='translate(188.2,332.4) scale(2.70)'/>
-	<use xlink:href='#gpPt6' transform='translate(239.8,310.8) scale(2.70)'/>
-	<use xlink:href='#gpPt6' transform='translate(300.8,288.5) scale(2.70)'/>
-	<use xlink:href='#gpPt6' transform='translate(371.2,270.7) scale(2.70)'/>
-	<use xlink:href='#gpPt6' transform='translate(451.1,252.8) scale(2.70)'/>
+	<use xlink:href='#gpPt6' transform='translate(90.1,387.7) scale(2.70)'/>
+	<use xlink:href='#gpPt6' transform='translate(113.4,370.2) scale(2.70)'/>
+	<use xlink:href='#gpPt6' transform='translate(146.1,349.1) scale(2.70)'/>
+	<use xlink:href='#gpPt6' transform='translate(188.2,334.0) scale(2.70)'/>
+	<use xlink:href='#gpPt6' transform='translate(239.8,311.0) scale(2.70)'/>
+	<use xlink:href='#gpPt6' transform='translate(300.8,291.5) scale(2.70)'/>
+	<use xlink:href='#gpPt6' transform='translate(371.2,273.4) scale(2.70)'/>
+	<use xlink:href='#gpPt6' transform='translate(451.1,255.3) scale(2.70)'/>
 	<use xlink:href='#gpPt6' transform='translate(540.4,229.9) scale(2.70)'/>
 </g>
 	</g>

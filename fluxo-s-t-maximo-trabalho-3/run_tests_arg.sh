@@ -7,14 +7,14 @@ read arg2
 echo "arg3:"
 read arg3
 echo "vertices edges iter_count elapsed_time" > "experiment-$arg1-$arg2-$arg3-all"
-for ((i = 1; i <= 10; i++))
+for ((i = 5; i <= arg1; i++))
 do
   for ((j = 0; j < 10; j++))
   do
     echo "Execution $j"
-    d1=$(echo "$arg1 * $i / 10" | bc)
+    d1=$(echo "$arg1 * $i / $arg1" | bc)
     echo $d1
-    d2=$(echo "$arg2 * $i / 10" | bc)
+    d2=$(echo "$arg2 * $i / $arg1" | bc)
     echo $d2
     ./gengraph $type $d1 $d2 $arg3 "test-$type-$arg1-$arg2-$arg3.gr"
     ./ford-fulkerson < "test-$type-$arg1-$arg2-$arg3.gr" 2>> "run.tmp"
