@@ -1,9 +1,11 @@
 #include<iostream>
 #include<vector>
 #include<list>
-#include <stdio.h>
-#include <stdlib.h>
+#include<stdio.h>
+#include<stdlib.h>
 #include<time.h>
+#include<iterator>
+#include<sstream>
 
 using namespace std;
 
@@ -12,7 +14,6 @@ const unsigned M = 13;
 list<int> table[M];
 
 int hash(int x) {
-  //cout << "hash(" << x << "): " << x % M << endl;
   return x % M;
 }
 
@@ -62,28 +63,36 @@ void print() {
 }
 
 int main(int argc, char *argv[]) {
-  /*
+  //Hash with lists
   string line;
   getline(cin, line);
+  vector<string> tokens;
+  istringstream iss(line);
+  copy(istream_iterator<string>(iss),
+    istream_iterator<string>(),
+    back_inserter<vector<string> >(tokens));
+  int ninserts = atoi(tokens[0].c_str());
+  int nlookups = atoi(tokens[1].c_str());
+  int insert_count = 0;
+  int lookups_count = 0;
+  int inserts[ninserts];
+  int lookups[nlookups];
   while (cin) {
     getline(cin, line);
-  }  
-  */
-  list<int> numbers;
-  srand(time(NULL));
-  for (int i=1; i <= 10000; i++) {
-    int num = (rand() % 32767)+1;
-    numbers.push_back(num);
-    insert(num);
+    if (insert_count < ninserts) {
+      inserts[insert_count] = atoi(line.c_str());
+      insert_count++;
+    } else {
+      lookups[lookups_count] = atoi(line.c_str());
+      lookups_count++;
+    }   
+  }   
+  for (int i=0; i < ninserts; i++) {
+    insert(inserts[i]);
+  }   
+  for (int i=0; i < nlookups; i++) {
+    cout << lookup(lookups[i]) << endl;
   }
-  /*
-  list<int>::iterator i;  
-  for (i=numbers.begin(); i != numbers.end(); ++i) {
-    cout << lookup(*i) << " - ";    
-  }
-  cout << endl;
-  */
+  
   print();
-
-  cout << endl;
 }
