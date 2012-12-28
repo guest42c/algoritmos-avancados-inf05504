@@ -16,12 +16,15 @@ const unsigned M = 7919;
 int table1[M];
 int table2[M];
 
+double A = (sqrt(5)-1)/2;
+double B = (sqrt(10)-1)/3.14159265;
+
 int hash1(int x) {
-  return x % M;
+  return (int) 7744 * fmod(A*x,1);
 }
 
 int hash2(int x) {
-  return ((M-x+1) % M);
+  return (int) 7744 * fmod(B*x,1);
 }
 
 int lookup(int x) {
@@ -35,11 +38,14 @@ bool insert(int x) {
   bool h1 = true;
   int count_down = 2*M;
   while (count_down-- > 0) {
+    bool brk = false;
     if (h1) {
       if (table1[p] == NUL) {
         table1[p] = x;
+        brk = true;
         break;
       }
+      if (brk) cout << "fudeu!" << endl;
       swap(x,table1[p]);
       p = hash2(x);
       h1 = !h1;      
@@ -101,8 +107,9 @@ int main(int argc, char *argv[]) {
 
   clock_t start, finish;
   start = clock();
-
+  //int fail = 0;
   for (int i=0; i < ninserts; i++) {
+    //if (!insert(inserts[i])) fail++; 
     insert(inserts[i]);
   } 
 
@@ -118,4 +125,5 @@ int main(int argc, char *argv[]) {
 
   cerr << ninserts << " " << nlookups << " " << M << " " <<  elapsed_time_insert << " " << elapsed_time_lookup << endl;
   //print();
+  //cout << "Fails: " << fail << endl;
 }

@@ -7,6 +7,7 @@ set xlabel "Fator de ocupação"
 set xrange [0:1.2]
 #set autoscale
 plot "experiment-enc-7919-100000-inserts" using 1:2:(0):($4-$2) with vec nohead lt -1 notit, "" using 1:3 w p lt 1 ps 0.8 pt 7 notit
+#plot "experiment-enc-7919-100000-inserts" using 1:3 w linesp notit
 
 set term svg enh
 set output "lookup-7919-100000.svg"

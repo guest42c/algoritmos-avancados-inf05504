@@ -36,6 +36,7 @@ bool insert(int x) {
   while (table[i] != NUL && table[i] != DEL && limit-- > 0) {
     i = (i == M-1) ? 0 : i+1;
   }
+  if (limit < 1) return false;
   table[i] = x;
   return true;
 }
