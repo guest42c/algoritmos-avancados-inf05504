@@ -10,7 +10,7 @@
 using namespace std;
 
 int n;
-const unsigned M = 1019;
+const unsigned M = 7919;
 list<int> table[M];
 
 int hash(int x) {
@@ -22,7 +22,7 @@ int lookup(int x) {
   list<int>::iterator i;
   for (i=table[j].begin(); i != table[j].end(); ++i) {
     if (x == *i) {
-      return *i;
+      return 1;//*i;
     }
   }
   return 0;
@@ -87,14 +87,25 @@ int main(int argc, char *argv[]) {
       lookups[lookups_count] = atoi(line.c_str());
       lookups_count++;
     }   
-  }   
+  }
+  
+  clock_t start, finish;
+  start = clock();
+
   for (int i=0; i < ninserts; i++) {
     insert(inserts[i]);
-  }   
-  /*
+  }
+
+  finish = clock();
+  long elapsed_time_insert = ((double)(finish - start))*1000/CLOCKS_PER_SEC;
+
+  start = clock();
   for (int i=0; i < nlookups; i++) {
     cout << lookup(lookups[i]) << endl;
-  }
-  */
-  print();
+  }  
+  finish = clock();
+  long elapsed_time_lookup = ((double)(finish - start))*1000/CLOCKS_PER_SEC;
+
+  cerr << ninserts << " " << nlookups << " " << M << " " <<  elapsed_time_insert << " " << elapsed_time_lookup << endl;
+  //print();
 }

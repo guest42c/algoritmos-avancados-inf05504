@@ -84,13 +84,22 @@ int main(int argc, char *argv[]) {
       lookups_count++;
     }
   }  
-
+  
+  clock_t start, finish;
+  start = clock();
   for (int i=0; i < ninserts; i++) {
     insert(inserts[i]);
   } 
-  print();
+  finish = clock();
+  long elapsed_time_insert = ((double)(finish - start))*1000/CLOCKS_PER_SEC;
+ 
+  start = clock();
   for (int i=0; i < nlookups; i++) {
-    cout << lookup(lookups[i]) << " ";
+    cout << lookup(lookups[i]) << endl;
   }
-  cout << endl;
+  finish = clock();
+  long elapsed_time_lookup = ((double)(finish - start))*1000/CLOCKS_PER_SEC;
+
+  cerr << ninserts << " " << nlookups << " " << M << " " <<  elapsed_time_insert << " " << elapsed_time_lookup << endl;
+
 }
