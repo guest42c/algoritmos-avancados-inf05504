@@ -23,7 +23,7 @@ int lookup(int x) {
   int i = hash(x);
   int limit = M;
   while (table[i] != NUL && limit-- > 0) {
-    if (table[i] != DEL && table[i] == x) return table[i];
+    if (table[i] != DEL && table[i] == x) return 1;//table[i];
     i = (i == M-1) ? 0 : i + 1; // increment i (mod table.length)
   }
   return NUL;

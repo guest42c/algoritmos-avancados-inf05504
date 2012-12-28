@@ -28,7 +28,7 @@ int hash2(int x) {
 }
 
 int lookup(int x) {
-  if (table1[hash1(x)] == x || table2[hash2(x)] == x) return x;
+  if (table1[hash1(x)] == x || table2[hash2(x)] == x) return 1;//x;
   return NUL;
 }
 
