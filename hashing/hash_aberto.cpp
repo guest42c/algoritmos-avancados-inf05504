@@ -12,8 +12,7 @@ using namespace std;
 const int DEL = -1;
 const int NUL = 0;
 
-//int n,q;
-const unsigned M = 100000;
+const unsigned M = 7919; //100000;
 int table[M];
 
 int hash(int x) {
@@ -22,7 +21,8 @@ int hash(int x) {
 
 int lookup(int x) {
   int i = hash(x);
-  while (table[i] != NUL) {
+  int limit = M;
+  while (table[i] != NUL && limit-- > 0) {
     if (table[i] != DEL && table[i] == x) return table[i];
     i = (i == M-1) ? 0 : i + 1; // increment i (mod table.length)
   }
@@ -31,13 +31,11 @@ int lookup(int x) {
 
 bool insert(int x) {
   if (lookup(x) != NUL) return false;
-  //if (2*(q+1) > table.length) resize(); //50% occupancy
   int i = hash(x);
-  while (table[i] != NUL && table[i] != DEL) {
+  int limit = M;
+  while (table[i] != NUL && table[i] != DEL && limit-- > 0) {
     i = (i == M-1) ? 0 : i+1;
   }
-  //if (table[i] == NUL) q++;
-  //n++;
   table[i] = x;
   return true;
 }
@@ -48,8 +46,6 @@ int remove(int x) {
     int y = table[i];
     if (y != DEL && x == y) {
       table[i] = DEL;
-      //n--;
-      //if (8*n < M) resize(); //min 12.5% occupancy
       return y;
     }
     i = (i == M-1) ? 0 : i+1;
@@ -92,42 +88,9 @@ int main(int argc, char *argv[]) {
   for (int i=0; i < ninserts; i++) {
     insert(inserts[i]);
   } 
-
-  for (int i=0; i < nlookups; i++) {
-    cout << lookup(lookups[i]) << endl;
-  }
-
-  /*  
-  list<int> numbers;
-  srand(time(NULL));
-  for (int i=1; i <= 12; i++) {
-    int num = (rand() % 32767)+1;
-    numbers.push_back(num);
-    insert(num);
-  }
-  
   print();
-  
-  bool rem = false;  
-  list<int>::iterator i;  
-  for (i=numbers.begin(); i != numbers.end(); ++i) {
-    if (rem) {
-      remove(*i);
-      rem = !rem;
-    } else {
-      cout << lookup(*i) << " ";
-      rem = !rem;
-    }
+  for (int i=0; i < nlookups; i++) {
+    cout << lookup(lookups[i]) << " ";
   }
   cout << endl;
-
-  print();
-  
-  for (int i=1; i <= 12; i++) {
-    int num = (rand() % 32767)+1;
-    insert(num);
-  }
-  
-  print();
-  */
 }

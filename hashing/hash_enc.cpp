@@ -10,7 +10,7 @@
 using namespace std;
 
 int n;
-const unsigned M = 13;
+const unsigned M = 1019;
 list<int> table[M];
 
 int hash(int x) {
@@ -58,8 +58,9 @@ void print() {
       count++;
       //cout << *j << " ";
     }
-    cout << count << endl;
+    cout << count << " - ";
   }
+  cout << endl;
 }
 
 int main(int argc, char *argv[]) {
@@ -90,9 +91,10 @@ int main(int argc, char *argv[]) {
   for (int i=0; i < ninserts; i++) {
     insert(inserts[i]);
   }   
+  /*
   for (int i=0; i < nlookups; i++) {
     cout << lookup(lookups[i]) << endl;
   }
-  
+  */
   print();
 }

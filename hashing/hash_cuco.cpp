@@ -12,8 +12,7 @@ using namespace std;
 
 const int NUL = 0;
 
-//int n,q;
-const unsigned M = 37; //7919;
+const unsigned M = 7919;
 int table1[M];
 int table2[M];
 
@@ -22,7 +21,7 @@ int hash1(int x) {
 }
 
 int hash2(int x) {
-  return ((int)floor(x/11)) % M;
+  return ((M-x+1) % M);
 }
 
 int lookup(int x) {
@@ -34,9 +33,8 @@ bool insert(int x) {
   if (lookup(x) != NUL) return false;
   int p = hash1(x);
   bool h1 = true;
-  int count_down = floor(M/2);
-  while (count_down > 0) {
-    count_down--;
+  int count_down = 2*M;
+  while (count_down-- > 0) {
     if (h1) {
       if (table1[p] == NUL) {
         table1[p] = x;
@@ -106,10 +104,10 @@ int main(int argc, char *argv[]) {
   } 
 
   print();
-
+  /*
   cout << "Lookups" << endl;
   for (int i=0; i < nlookups; i++) {
     cout << "Find " << lookups[i] << " ==> " << lookup(lookups[i]) << " " << endl;
   }
-  //cout << endl;
+  */
 }
